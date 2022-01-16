@@ -1,0 +1,7 @@
+https://attacomsian.com/blog/javascript-array-populate
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Remainder
+
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+
+https://stackoverflow.com/questions/8160446/logarithmic-chart-in-flot

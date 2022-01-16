@@ -1,0 +1,79 @@
+<html>
+<meta charset="utf-8">
+<body>
+
+<table align="center" width="500" border="1">
+<tr>
+	<td>
+		<div>
+			Qual o período do pêndulo?
+			<ol style="list-style-type:lower-alpha">
+			<li> <input type="radio" name="resp" id="r1" onChange="verifica(1)"> <span id="e1"></span> s </li>
+			<li> <input type="radio" name="resp" id="r2" onChange="verifica(2)"> <span id="e2"></span> s </li>
+			<li> <input type="radio" name="resp" id="r3" onChange="verifica(3)"> <span id="e3"></span> s </li>
+			</ol>
+		</div>
+	</td>
+
+	<td>
+
+		<canvas id="cnv" width="200" height="300" style="border:1px solid black"><canvas>
+		
+		<script>
+		var xmin = -1; var xmax = +1; var ymin = 0; var ymax = 3;
+		var cnv = document.getElementById("cnv");
+		var ctx = cnv.getContext("2d");
+		var cnvW = cnv.width;
+		var cnvH = cnv.height;		
+		ctx.setTransform(cnvW/(xmax-xmin),0,0,-cnvH/(ymax-ymin),cnvW/2,cnvH); // scx,0,0,scy,dx,dy
+		ctx.lineWidth = 1/(cnvW/(xmax-xmin));
+
+		var H = ymin + (ymax-ymin)*0.9; // altura do ponto de fixação
+		var lmin = 0.1; // tamanho mínimo do pêndulo
+		var lmax = 2.5; // tamanho máximo do pêndulo
+		var L = lmin + (lmax-lmin)*Math.random(); // tamanho do pêndulo
+
+		var g = 9.8;
+		var T = 2*Math.PI*Math.sqrt(L/g);
+
+		var alt = 1 + Math.floor(Math.random()*3);
+		document.getElementById("e"+alt).innerHTML = "<span style='color:red'>" + T.toFixed(1) + "</span>";
+		for (var i=1;i<=3;i++) {
+			if (i!=alt) {
+				var x = T * 0.8 * Math.random() + i;
+				document.getElementById("e"+i).innerHTML = x.toFixed(1);
+			}
+		}
+
+		function verifica() {
+			if (
+			else alert("Tente novamente");
+			
+
+		ctx.beginPath();
+		ctx.moveTo(0,H);
+		ctx.lineTo(0,H-L);
+		ctx.strokeStyle = "blue";
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.arc(0,H-L,0.1,0,2*Math.PI,0)
+		ctx.fillStyle = "green";
+		ctx.fill();
+		ctx.strokeStyle = "yellow";
+		ctx.stroke();
+		
+		/* x(t)= A cos w t			w = 2pi f = 2pi/T
+			var inicio = newDate()
+			var agora = newDate()
+			t = agora - inicio * 1000
+		*/
+
+		</script>
+		
+	</td>
+</tr>
+</table>
+
+</body>
+</html>

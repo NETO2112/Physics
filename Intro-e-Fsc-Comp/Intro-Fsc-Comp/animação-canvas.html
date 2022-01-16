@@ -1,0 +1,65 @@
+<html>
+<body>
+
+<canvas id="cnv" width="500" height="500" style="border:1px solid black;" onClick="clearInterval(timer)">
+</canvas>
+
+<script>
+var ctx = document.getElementById("cnv").getContext("2d");
+
+/* 1
+ctx.beginPath();
+ctx.arc(0,200,10,0,2*Math.PI,0);
+ctx.fill();
+*/
+
+var x = 10;
+var y = 10;
+var vx = 10;
+var vy = 7;
+var dt = 1;
+
+var timer = setInterval("desenha()", 10);
+
+function desenha() {
+	//ctx.clearRect(0,0,500,500);
+	x = x + vx * dt;
+	y = y + vy * dt;
+	/* 2
+	ctx.beginPath();
+	ctx.fillStyle = "red";
+	ctx.rect(480,260,10,60);
+	ctx.fill();
+	*/
+	ctx.beginPath();
+	ctx.arc(x,y,10,0,2*Math.PI,0);
+	var cor = parseInt(255*Math.random());
+	var cor1 = parseInt(255*Math.random());
+	var cor2 = parseInt(255*Math.random());
+	ctx.fillStyle = "rgb(" + cor + "," + cor1 + "," + cor2 + ")";
+	ctx.fill();
+	
+	if ((x>490)||(x<10)) {  // || "ou"
+		vx = -vx;
+		x = x + vx * dt;
+	}
+	if ((y>490)||(y<10)) {
+		vy = -vy;
+		y = y + vy * dt;
+	}
+	
+	//if ((x>490)||(x<10)||(y>490)||(y<10)) {
+		
+	/* 2
+	if ((x>470)&&(x<490)&&(y>200)&&(y>320)) {
+		alert("Gol!");
+		clearInterval(timer);
+	}
+	*/
+	console.log(x,y,vx,vy);
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+<body>
+
+<script>
+
+/* instruções para obter diferenças de tempo
+var inicio = new Date();
+var c = prompt("Digite a letra h").toLowerCase();
+if (c=="h") var agora = new Date();
+document.write(inicio + "<br>");
+document.write(agora - inicio);
+*/
+
+// instrução para um disparo único e seu cancelamento
+/*
+var timer = setTimeout("alert('Você morreu')",3000);
+var c = prompt("Digite a letra c").toLowerCase();
+if (c=="c") clearInterval(timer);
+*/
+
+// instruções para múltiplos disparos
+/*
+var timer = setInterval("cancela()",500);
+
+function cancela() {
+	var c = confirm("Desligar o timer?");
+	if (c) clearInterval(timer);
+}
+*/
+
+</script>
+
+<input type="button" value="L/D" onClick="toggle()" />
+<div id="output" style="border:1px solid black;width:200px">0</div>
+
+<script>
+/*
+var timer;
+var inicio = new Date;
+
+function toggle() {
+	if (timer) {
+		clearInterval(timer);
+		timer = null; // false, 0
+	}
+	else timer = setInterval("display()",1);
+}
+
+function display() {
+	var agora = new Date();
+	document.getElementById("output").innerHTML = (agora - inicio);
+}
+*/
+
+var timer;
+var inicio;
+var agora;
+var ultimo;
+
+function toggle() {
+	if (timer) {
+		clearInterval(timer);
+		timer = null; // false, 0
+		ultimo = (agora.getTime()-inicio.getTime());
+	}
+	else {
+		timer = setInterval("display()",1);
+		inicio = new Date();
+	}
+}
+
+function display() {
+	var agora = new Date();
+	document.getElementById("output").innerHTML = ultimo;
+}
+</script>
+</body>
+</html>

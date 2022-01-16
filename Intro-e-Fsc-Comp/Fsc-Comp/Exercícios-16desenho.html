@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+<script>
+
+var a=1.27*2, l=1.91*2;
+
+var A=[1.91,1.27,0.00],B=[-1.91,1.27,0.00],C=[-1.91,-1.27,0.00],D=[1.91,-1.27,0.00];
+
+var Rx=[],Ry=[],Rz=[],T=[];
+for (var i=0;i<=2;i++) {
+	Rx[i]=[];
+	Ry[i]=[];
+	Rz[i]=[];
+}
+
+function Rot(r,teta,eixo) {
+
+	var R=[];
+
+	Rx[0][0]=1;
+	Rx[0][1]=0;
+	Rx[0][2]=0;
+
+	Rx[1][0]=0;
+	Rx[1][1]=Math.cos(teta);
+	Rx[1][2]=-Math.sin(teta);
+
+	Rx[2][0]=0;
+	Rx[2][1]=Math.sin(teta);
+	Rx[2][2]=Math.cos(teta);
+
+
+	Ry[0][0]=Math.cos(teta);
+	Ry[0][1]=0;
+	Ry[0][2]=Math.sin(teta);
+
+	Ry[1][0]=0;
+	Ry[1][1]=1;
+	Ry[1][2]=0;
+
+	Ry[2][0]=-Math.sin(teta);
+	Ry[2][1]=0;
+	Ry[2][2]=Math.cos(teta);
+
+
+	Rz[0][0]=Math.cos(teta);
+	Rz[0][1]=-Math.sin(teta);
+	Rz[0][2]=0;
+
+	Rz[1][0]=Math.sin(teta);
+	Rz[1][1]=Math.cos(teta);
+	Rz[1][2]=0;
+
+	Rz[2][0]=0;
+	Rz[2][1]=0;
+	Rz[2][2]=1;
+
+	if (eixo==0) {
+		R[0]=r[0]*Rx[0][0]+r[1]*Rx[1][0]+r[2]*Rx[2][0];
+		R[1]=r[0]*Rx[0][1]+r[1]*Rx[1][1]+r[2]*Rx[2][1];
+		R[2]=r[0]*Rx[0][2]+r[1]*Rx[1][2]+r[2]*Rx[2][2];
+	}
+
+	if (eixo==1) {
+		R[0]=r[0]*Ry[0][0]+r[1]*Ry[1][0]+r[2]*Ry[2][0];
+		R[1]=r[0]*Ry[0][1]+r[1]*Ry[1][1]+r[2]*Ry[2][1];
+		R[2]=r[0]*Ry[0][2]+r[1]*Ry[1][2]+r[2]*Ry[2][2];
+	}
+
+	if (eixo==2) {
+		R[0]=r[0]*Rz[0][0]+r[1]*Rz[1][0]+r[2]*Rz[2][0];
+		R[1]=r[0]*Rz[0][1]+r[1]*Rz[1][1]+r[2]*Rz[2][1];
+		R[2]=r[0]*Rz[0][2]+r[1]*Rz[1][2]+r[2]*Rz[2][2];
+	}
+
+	return R;
+}
+
+function Trans(r,dx,dy,dz) {
+
+	var R=[];
+
+	T[0]=dx;
+	T[1]=dy;
+	T[2]=dz;
+
+	R[0]=r[0]+T[0];
+	R[1]=r[1]+T[1];
+	R[2]=r[2]+T[2];
+
+	return R;
+
+}
+
+document.write(A+"<br>"+B+"<br>"+C+"<br>"+D+"<br><br>");
+
+A=Rot(A,-Math.PI/2,1);
+B=Rot(B,-Math.PI/2,1);
+C=Rot(C,-Math.PI/2,1);
+D=Rot(D,-Math.PI/2,1);
+
+document.write(A+"<br>"+B+"<br>"+C+"<br>"+D+"<br><br>");
+
+A=Rot(A,Math.PI/4,0);
+B=Rot(B,Math.PI/4,0);
+C=Rot(C,Math.PI/4,0);
+D=Rot(D,Math.PI/4,0);
+
+document.write(A+"<br>"+B+"<br>"+C+"<br>"+D+"<br><br>");
+
+var d=0.5;
+
+A=Trans(A,0,d+Math.abs(D[1]),Math.abs(D[2]));
+B=Trans(B,0,d+Math.abs(D[1]),Math.abs(D[2]));
+C=Trans(C,0,d+Math.abs(D[1]),Math.abs(D[2]));
+D=Trans(D,0,d+Math.abs(D[1]),Math.abs(D[2]));
+
+document.write(A+"<br>"+B+"<br>"+C+"<br>"+D+"<br><br>");
+
+A=Rot(A,Math.PI/3,2);
+B=Rot(B,Math.PI/3,2);
+C=Rot(C,Math.PI/3,2);
+D=Rot(D,Math.PI/3,2);
+
+document.write(A+"<br>"+B+"<br>"+C+"<br>"+D+"<br><br>");
+
+</script>
+</html>

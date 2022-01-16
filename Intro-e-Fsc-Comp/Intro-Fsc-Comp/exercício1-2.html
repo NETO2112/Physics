@@ -1,0 +1,11 @@
+<script>
+
+var y0 = 1.00e-2; // m
+var f = 1.00e5; // Hz
+var l = 0.033; // m
+var x = 2.00; // m
+var t = 2.00; // s
+var y = y0 * Math.cos( 2 * Math.PI * ( x / l - f * t ) )
+
+document.write(y.toFixed(4));
+</script>

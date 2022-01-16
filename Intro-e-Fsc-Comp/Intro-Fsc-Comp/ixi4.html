@@ -1,0 +1,169 @@
+<script>
+/*
+var m = [5,6,7,2,3]; // declara matriz e atribui valores aos elementos
+//document.write(m + "<br>"); // "m[3]" só o quarto elemento (começa m=0)
+for (var i=0; i<m.length; i=i+1) {
+	document.write(m[i] + "<br>");
+}
+for (var i in m) {
+	document.write(m[i] + "<br>");
+}
+
+//
+
+var a = new Array(5); // declara matriz de 5 elementos vazios
+document.write(a + "<br>");
+
+a = [5,6,7,2,3]; // atribui valores aos elementos da matriz
+document.write(a + "<br>");
+
+//
+
+
+var b = []; //declara matriz de tamanho indefinido
+document.write(b + "<br>");
+b.push(5); // b[0] = 5
+b.push(6);
+b[2] = 7;
+b.push(2);
+b.push(3);
+document.write(b + "<br>");
+b.pop(); //tirar
+document.write(b + "<br>");
+
+//
+
+var pessoa = [];
+pessoa["nome"] = "João";
+pessoa["endereco"] = "Rua dos bobos nro 0";
+pessoa["idade"] = "25";
+document.write(pessoa["nome"] + "<br>")
+for (var i in pessoa) {
+	document.write(pessoa[m] + "<br>");
+}
+*/
+
+
+
+// CENTRO DE MASSA // //parseFloat transforma texto em número parseInt número inteiro
+
+
+
+
+/*
+var x = [ -2, -1, 0, 1, 2];
+var m = [ 1, 1, 1, 1, 1];
+
+var xcm = 0; //vai guardar o x do centro de massa
+var sm = 0; // vai guardar a soma das massas
+
+for ( var i=0; i<x.length; i=i+1) {
+	xcm = xcm + x[i]*m[i];
+	sm = sm + m[i];
+}
+
+xcm = xcm / sm;
+
+document.write(xcm);
+*/
+
+/*
+var x = [];
+var m = [];
+var N = parseInt(prompt("Entre com o numero de elementos"));
+for (var i=0;i<N;i=i+1) {
+	x[i] = parseFloat(prompt("Posicao do elemento " + (i+1)));
+	m[i] = parseFloat(prompt("Massa do elemento " + (i+1)));
+}
+
+var xcm = 0; //vai guardar o x do centro de massa
+var sm = 0; // vai guardar a soma das massas
+for ( var i=0; i<x.length; i=i+1) {
+	xcm = xcm + x[i]*m[i];
+	sm = sm + m[i];
+}
+
+xcm = xcm / sm;
+
+document.write(xcm);
+*/
+
+/*
+pos = prompt("Entre com os valores de x (separados por virgula)");
+//document.write(pos + "<br>");
+
+mas = prompt("Entre com os valores de m (separados por virgula)");
+//document.write(mas + "<br>");
+
+var x = pos.split(","); // separa os elementos da matriz
+//document.write(x + "<br>");
+for (var i=0;i<x.length;i=i+1) x[i] = parseFloat(x[i]); // não precisa de chaves/nro real
+
+
+var m = mas.split(",");
+//document.write(m + "<br>");
+for (var i=0;i<m.length;i=i+1) { // tipo esse
+	 m[i] = parseFloat(m[i])
+};
+
+
+var xcm = 0;
+var sm = 0;
+for (var i=0; i<x.length; i=i+1) {
+	xcm = xcm + x[i]*m[i];
+	sm = sm + m[i];
+}
+xcm = xcm / sm;
+document.write(xcm);
+*/
+
+
+
+// EXERCÍCIO //
+// var t = []
+// for (var i=0;i<13;i=i+1) t[i] = 10*i;
+
+var t = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+var v = [9.0, 7.2, 4.4, 3.6, 3.1, 1.9, 2.8, 6.3, 8.3, 7.4, 6.3, 5.8, 3.7]
+
+var vm = 0;
+
+for ( var i=0;i<v.length; i=i+1) {
+	vm = vm + v[i];
+}
+vm = vm / v.length
+document.write(vm.toFixed(1) + " m/s");
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

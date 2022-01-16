@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+	<meta charset="utf-8">
+	<script src="http://canzian.fsc.ufsc.br/Plotly/plotly-latest.min.js">
+	</script>
+</head>
+
+<body>
+
+<div id="divGraf1" style="width:500px;height:350px"></div>
+
+<script>
+
+var l=1, a=1, M0=1, c=1, M0c=M0/c;
+
+function c1Bx(x,y,z) {
+	var n1x=((y-a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	var n2x=((y+a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d1x=((y+a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d2x=((y-a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+
+	var Bx=M0c*Math.log((n1x/d1x)*(n2x/d2x));
+	return Bx;
+}
+
+var N=20;
+var dx=4*l/N;
+var x=[];
+var Bx=[];
+var Bx1=[];
+var Bx2=[];
+var Bx3=[];
+
+for (var i=0;i<=N;i++) {
+	x[i]=-2*l+i*dx;
+	var y=0;
+	var z=1;
+	Bx[i]=c1Bx(x[i],y,z);
+}
+
+for (var i=0;i<=N;i++) {
+	x[i]=-2*l+i*dx;
+	var y=0;
+	var z=2;
+	Bx1[i]=c1Bx(x[i],y,z);
+}
+
+for (var i=0;i<=N;i++) {
+	x[i]=-2*l+i*dx;
+	var y=0;
+	var z=3;
+	Bx2[i]=c1Bx(x[i],y,z);
+}
+
+for (var i=0;i<=N;i++) {
+	x[i]=-2*l+i*dx;
+	var y=0;
+	var z=4;
+	Bx3[i]=c1Bx(x[i],y,z);
+}
+
+var dados=[
+	{
+	x: x,
+	y: Bx,
+	mode: "lines",
+	name: "Bx",
+	line: {
+		color: "blue"
+		}
+	},
+	{
+	x: x,
+	y: Bx,
+	mode: "markers",
+	name: "Bx",
+	marker: {
+		color: "blue"
+		}
+	},
+	{
+	x: x,
+	y: Bx1,
+	mode: "lines",
+	name: "Bx1",
+	line: {
+		color: "blue"
+		}
+	},
+	{
+	x: x,
+	y: Bx1,
+	mode: "markers",
+	name: "Bx1",
+	marker: {
+		color: "blue"
+		}
+	},
+	{
+	x: x,
+	y: Bx2,
+	mode: "lines",
+	name: "Bx2",
+	line: {
+		color: "blue"
+		}
+	},
+	{
+	x: x,
+	y: Bx2,
+	mode: "markers",
+	name: "Bx2",
+	marker: {
+		color: "blue"
+		}
+	},
+	{
+	x: x,
+	y: Bx3,
+	mode: "lines",
+	name: "Bx3",
+	line: {
+		color: "blue"
+		}
+	},
+	{
+	x: x,
+	y: Bx3,
+	mode: "markers",
+	name: "Bx3",
+	marker: {
+		color: "blue"
+		}
+	}
+];
+
+var layout={
+	title: "Campo magnético de um ímã",
+	showlegend: true,
+	xaxis: {
+		title: '<i>x</i> (un. arb.)',
+		tickformat: '0.2f',
+		showline: false,
+		range:[-2.1*l,+2.1*l]
+	},
+	yaxis: {
+		title: '<i>B</i><sub><i>x</i></sub> (un. arb.)',
+		tickformat: '0.2f',
+		showline: false
+	}
+}
+
+Plotly.newPlot("divGraf1",dados,layout);
+
+</script>
+
+</body>
+
+</html>

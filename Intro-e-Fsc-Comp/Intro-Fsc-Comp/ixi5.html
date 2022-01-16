@@ -1,0 +1,85 @@
+<script>
+
+/*
+var notas = [];
+notas[0] = ["Ana", 7.0, 8.0, 6.0];
+notas[1] = ["Pedro", 7.5, 8.0, 5.0];
+notas[2] = ["Tatiana", 6.0, 9.0, 10.0];
+
+var media = []; // var media = new Array(notas.length);
+
+for (var i=0; i<notas.length; i=i+1) { 
+	media[i] = 0;	
+	for (var j=1; j<notas[i].length; j=j+1) {
+		media[i] = media[i] + notas[i][j];
+	}
+	media[i] = media[i]/(notas[i].length-1);
+}
+for (var i=0;i<notas.length;i=i+1) {
+	document.write(notas[i][0] + ": " + media[i].toFixed(2) + "<br>");
+}
+*/
+
+
+
+////////////////////////////PRODUTO DE DUAS MATRIZES//////////////////////////////////
+
+
+var a = [ [1, 2], [2, 3], [3,4] ]; // 3x2 MxN
+var b = [ [0,1,2], [1,2,3] ]; // 2x3 NxM
+
+//
+
+var M = a.length;
+var N = b.length;
+var c = [];
+for (var i=0;i<M;i=i+1) {
+	c[i]= [];
+	for (var j=0;j<M;j=j+1) {
+		c[i][j] = 0;
+	}
+}
+
+//
+
+//
+/*
+var M = 3;
+var N = 2;
+var c = [ [0,0,0], [0,0,0], [0,0,0] ]; // 3x3 MxM
+*/
+//
+
+for (var i=0;i<3;i=i+1) {
+
+	for (var j=0;j<3;j=j+1) {
+		
+		for (var k=0;k<2;k=k+1) {
+			c[i][j] = c[i][j] + a[i][k]*b[k][j];
+		}
+	}
+}
+
+for (var i=0;i<3;i=i+1) {
+	for (var j=0;j<3;j=j+1) {
+		document.write(c[i][j] + " ");
+	}
+	document.write("<br>");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

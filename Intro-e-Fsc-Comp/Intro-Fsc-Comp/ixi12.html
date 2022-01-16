@@ -1,0 +1,104 @@
+<html>
+<body>
+
+<!--
+<canvas id="cnv" width="300" height="300" style="border:1px solid black;background-color:pink"> 
+</canvas>
+
+<script>
+var ctx = document.getElementById("cnv").getContext("2d");
+
+ctx.moveTo(0,0);
+ctx.lineTo(300,300);
+ctx.strokeStyle = "red";
+ctx.lineWidth = "5";
+ctx.stroke();
+
+ctx.beginPath();
+ctx.arc(150,150,20,0,2*Math.PI,0); //(x0,y0,r,angi,angf,sentido)
+ctx.fillStyle = "blue";
+ctx.fill();
+ctx.stroke();
+
+ctx.beginPath();
+ctx.rect(50,50,200,200);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.lineWidth=2;
+ctx.font = "50px Arial bold";
+ctx.textAlign ="center";
+ctx.textBaseline = "middle";
+ctx.fillStyle = "cyan";
+ctx.strokeStyle = "magenta";
+ctx.fillText("Meu Texto",150,150);
+ctx.strokeText("Meu Texto",150,150);
+
+</script>
+-->
+
+<canvas id="cnv" width="300" height="300" style="border:1px solid black;background-color:pink"> 
+</canvas>
+
+<script>
+var ctx = document.getElementById("cnv").getContext("2d");
+
+/*
+//ctx.translate(150,150);
+//ctx.scale(2,2);
+//ctx.rotate(Math.PI/4)
+
+var ang = Math.PI/4;
+ctx.setTransform(5*Math.cos(ang),-Math.sin(ang),Math.sin(ang),5*Math.cos(ang),150,150);
+*/
+
+var r = 10;
+ctx.setTransform(300/10,0,0,-300/10,150,300);
+
+ctx.lineWidth = 10/300;
+r = r*10/300;
+ctx.beginPath();
+ctx.arc(0,0,r,0,2*Math.PI,0);
+ctx.stroke();
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

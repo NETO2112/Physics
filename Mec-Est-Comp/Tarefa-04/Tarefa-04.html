@@ -1,0 +1,567 @@
+<script src="../../0/jquery.js"></script>
+<script src="../../0/jquery.flot.js"></script>
+<script src="../../0/jquery.flot.errorbars.js"></script>
+<script src="../../0/jquery.flot.axislabels.js"></script>
+<script src="../../0/jquery.flot.curvedLines.js"></script>
+<script src="../../0/jquery.flot.logaxis.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+<div align="center"><h1>Densidade de pulgas no cachorro "1" em 3 amostras</h1></div>
+<div id="grafico" align="center" style="width:1000px; height:300px"></div>
+<div align="center"><h1>Densidade média de pulgas no entre 100 amostras</h1></div>
+<div id="grafico2" align="center" style="width:1000px; height:300px"></div>
+<div id="grafico3" align="center" style="width:1000px; height:300px"></div>
+
+<script type="text/javascript">
+
+var P1 = 50, P2 = 500, P3 = 5000; //nº de pulgas
+var n = []; //nº de pulgas no cachorro 1 em cada tempo t
+var ps; //pulga sorteada
+var T = []; //tempo
+var r1=[],r2=[],r3=[]; //rô, densidade de pulgas no cachorro 1
+var tempo = 10000;
+
+var p1=Array(P1).fill(0),p2=Array(P2).fill(0),p3=Array(P3).fill(0); //posição das pulgas para rô i. Todas no cachorro 0
+
+
+//document.write(p);
+
+for (var t=0;t<=tempo;t++) {
+	
+	T[t]=t;							//marcando o tempo pra jogar no gráfico
+	n[t]=0;							//zerando o número de pulgas no tempo t
+	
+	ps = parseInt(Math.random()*P1); //pulga sorteadíssima
+	
+	p1[ps] = (p1[ps] + 1)%2;			//a pulga sorteada pulou do cachorro que ela tava pro outro
+	
+	for (var i=0;i<P1;i++) {
+		
+		n[t] = n[t] + p1[i];
+		
+	}
+	
+	r1[t] = [T[t],n[t]/P1];
+		
+	//começa pro segundo caso com P2 pulgas
+	
+	n[t]=0;	//tem que zerar toda vez que vai pra outro caso, se não usaria as pulgas anteriores
+	
+	ps = parseInt(Math.random()*P2); //sorteando pra cada caso visto que os P's são diferentes
+	
+	p2[ps] = (p2[ps] + 1)%2;
+	
+	for (var i=0;i<P2;i++) {
+		
+		n[t] = n[t] + p2[i];
+		
+	}
+	
+	r2[t] = [T[t],n[t]/P2];
+	
+	//começa pro terceiro caso com P3 pulgas
+	
+	n[t]=0;
+	
+	ps = parseInt(Math.random()*P3);
+	
+	p3[ps] = (p3[ps] + 1)%2;
+
+	for (var i=0;i<P3;i++) {
+		
+		n[t] = n[t] + p3[i];
+		
+	}
+	
+	r3[t] = [T[t],n[t]/P3];
+}
+
+var data = [{ data:r1, label:P1+" PULGAS", lines: {show:true}},
+			{ data:r2, label:P2+" PULGAS", lines: {show:true}},
+			{ data:r3, label:P3+" PULGAS", lines: {show:true}}];
+
+var options = { legend:{position:"nw"}, 
+				colors: ["#8F33FF","#FF0000","#00FF00"],
+				xaxis: {
+            		ticks: 10,
+            		tickColor: "white",
+                    //min:0,
+                    //max:1.5,
+                    tickDecimals: 0,
+                	font: { color:"black", size:12 },
+					axisLabel: 't',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 20,
+					axisLabelFontFamily: 'Arial'
+				},
+				yaxis: {show:true,
+            		ticks: 2,
+            		tickColor: "gray",
+                	//min: -30,
+                	//max: 30,
+                	tickDecimals: 1,
+                	font: { color:"black", size:12 },
+					axisLabel: 'ρ',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 20,
+					axisLabelFontFamily: 'Arial'
+				}};
+
+//document.write(p);
+
+$.plot("#grafico", data, options);
+
+
+//SEGUNDA PARTE////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+var PU=5000;
+var pu=Array(PU).fill(0);
+
+var med=0,med2=0;
+
+var TU=[],nu=[],nu2=[],nu3=[],psu;
+
+var tempou=10000;
+
+var r=Array(5).fill(0);
+var r2=Array(5).fill(0);
+var Ns=100;
+
+var pu1=[],pu10=[],pu100=[],pu1000=[],pu10000=[];
+
+for (var k=0;k<Ns;k++) {
+
+	for (var t=0;t<=10*PU;t++) {
+
+		nu[t]=0;
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu[psu] = (pu[psu] + 1)%2;
+		pu1[psu]=pu[psu],pu10[psu]=pu[psu],pu100[psu]=pu[psu],pu1000[psu]=pu[psu],pu10000[psu]=pu[psu];
+	}
+	
+	for (var i=0;i<1;i++) {
+		nu[i]=0;
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu1[psu] = (pu1[psu] + 1)%2;
+		
+		for (var j=0;j<PU;j++) {
+		
+			nu[i] = nu[i] + pu1[j];
+			
+		}
+		
+		r[0] = r[0] + nu[i]/PU;
+		r2[0] = r2[0] + Math.pow(nu[i]/PU,2);
+	}
+	
+	for (var i=0;i<10;i++) {
+		nu[i]=0;
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu10[psu] = (pu10[psu] + 1)%2;
+		
+		for (var j=0;j<PU;j++) {
+		
+			nu[i] = nu[i] + pu10[j];
+			
+		}
+		
+		r[1] = r[1] + nu[i]/PU;
+		r2[1] = r2[1] + Math.pow(nu[i]/PU,2);
+	}
+	
+	for (var i=0;i<100;i++) {
+		nu[i]=0;
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu100[psu] = (pu100[psu] + 1)%2;
+		
+		for (var j=0;j<PU;j++) {
+		
+			nu[i] = nu[i] + pu100[j];
+			
+		}
+		
+		r[2] = r[2] + nu[i]/PU;
+		r2[2] = r2[2] + Math.pow(nu[i]/PU,2);
+	}
+	
+	for (var i=0;i<1000;i++) {
+		nu[i]=0;
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu1000[psu] = (pu1000[psu] + 1)%2;
+		
+		for (var j=0;j<PU;j++) {
+		
+			nu[i] = nu[i] + pu1000[j];
+			
+		}
+		
+		r[3] = r[3] + nu[i]/PU;
+		r2[3] = r2[3] + Math.pow(nu[i]/PU,2);
+	}
+	
+	for (var i=0;i<10000;i++) {
+		nu[i]=0;
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu10000[psu] = (pu10000[psu] + 1)%2;
+		
+		for (var j=0;j<PU;j++) {
+		
+			nu[i] = nu[i] + pu1[j];
+			
+		}
+		
+		r[4] = r[4] + nu[i]/PU;
+		r2[4] = r2[4] + Math.pow(nu[i]/PU,2);
+	}
+}
+
+var sigma=[];
+var datau=[];
+
+for (var i=0;i<=4;i++) {
+	document.write(r[i]+"<br>"+r2[i]+"<br>");
+	r[i]=r[i]/(Ns*(10**i));
+	r2[i]=r2[i]/(Ns*(10**i));
+	
+	sigma[i]=Math.sqrt((r2[i]-Math.pow(r[i],2))/Ns);
+	document.write(sigma[i]+"<br>"+r[i]+"<br>"+r2[i]+"<br><br>");
+	datau[i]=[10**i,r[i],sigma[i]];
+	
+}
+
+ var options1 = {
+        lines: { show: false },
+		points: { show: true, errorbars: 'y', yerr: {show: true, color: 'green'}},
+        xaxis: {ticks: [1,10,100,1000,10000],
+				tickColor: "white",
+                transform:  function(v) {return Math.log(v+0.0001);},
+				axisLabel: 't',
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 20,
+				axisLabelFontFamily: 'Arial'
+		},
+		yaxis: {show:true,
+            	//ticks: 5,
+            	tickColor: "gray",
+               	min: 0.496,
+               	max: 0.504,
+               	tickDecimals: 3,
+               	font: { color:"black", size:12 },
+				axisLabel: '<ρ>',
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 20,
+				axisLabelFontFamily: 'Arial'
+				},
+		colors: ["red"]
+
+};
+
+$.plot("#grafico2", [datau], options1);
+*/
+
+
+
+/*
+for (var k=0;k<Ns;k++) {
+
+	for (var t=0;t<=10*PU;t++) {
+		
+		TU[t]=t;
+		nu[t]=0;
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu[psu] = (pu[psu] + 1)%2;
+	}
+
+	for (var i=0;i<=tempou;i++) {
+		TU[i]=i;
+		nu[i]=0;
+		nu2[i]=0;
+		nu3[i]=0;
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu[psu] = (pu[psu] + 1)%2;
+		
+		for (var j=0;j<PU;j++) {
+		
+			nu[i] = nu[i] + pu[j];
+			
+		}
+		
+		if (i==1) {
+			r[0] = r[0] + nu[i]/PU;
+			r2[0] = r2[0] + Math.pow(nu[i]/PU,2);
+		}
+		
+		if (i==10) {
+			r[1] = r[1] + nu[i]/PU;
+			r2[1] = r2[1] + Math.pow(nu[i]/PU,2);
+		}
+		
+		if (i==100) {
+			r[2] = r[2] + nu[i]/PU;
+			r2[2] = r2[2] + Math.pow(nu[i]/PU,2);
+		}
+		
+		if (i==1000) {
+			r[3] = r[3] + nu[i]/PU;
+			r2[3] = r2[3] + Math.pow(nu[i]/PU,2);
+		}
+		
+		if (i==10000) {
+			r[4] = r[4] + nu[i]/PU;
+			r2[4] = r2[4] + Math.pow(nu[i]/PU,2);
+		}
+	}
+}
+
+var sigma=[];
+var datau=[];
+
+for (var i=0;i<=4;i++) {
+	//document.write(r[i]+"<br>"+r2[i]+"<br>");
+	r[i]=r[i]/Ns;
+	r2[i]=r2[i]/Ns;
+	
+	sigma[i]=Math.sqrt((r2[i]-Math.pow(r[i],2))/Ns);
+	//document.write(sigma[i]+"<br>"+r[i]+"<br>"+r2[i]+"<br><br>");
+	datau[i]=[10**i,r[i],sigma[i]];
+	
+}
+
+ var options1 = {
+        lines: { show: false },
+		points: { show: true, errorbars: 'y', yerr: {show: true, color: 'green'}},
+        xaxis: {ticks: [1,10,100,1000,10000],
+				tickColor: "white",
+                transform:  function(v) {return Math.log(v+0.0001);},
+				axisLabel: 't',
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 20,
+				axisLabelFontFamily: 'Arial'
+		},
+		yaxis: {show:true,
+            	//ticks: 5,
+            	tickColor: "gray",
+               	min: 0.496,
+               	max: 0.504,
+               	tickDecimals: 3,
+               	font: { color:"black", size:12 },
+				axisLabel: '<ρ>',
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 20,
+				axisLabelFontFamily: 'Arial'
+				},
+		colors: ["red"]
+
+};
+
+$.plot("#grafico2", [datau], options1);
+*/
+
+
+
+/*
+var Ns=100;
+var temp=60000;
+var r=Array(5).fill(0);
+var r2=Array(5).fill(0);
+
+for (var k=0;k<Ns;k++) {
+	
+	for (var t=0;t<=temp;i++) {
+		
+		psu = parseInt(Math.random()*PU);
+		
+		if (pu[psu]==0) pu[psu]=1;
+		else pu[psu]=0;
+		
+		for (var j=0;j<PU;j++) {
+			nu[i] = nu[i] + pu[j];
+		}
+		
+		if (j==10*PU) {
+			r[0] = r[0] + nu[i]/PU;
+			r2[0] = r2[0] + Math.pow(nu[i]/PU,2);
+		}
+		
+		if (j==10*PU+10) {
+			r[1] = r[1] + nu[i]/PU;
+			r2[1] = r2[1] + Math.pow(nu[i]/PU,2);
+		}
+		
+		if (j==10*PU+100) {
+			r[2] = r[2] + nu[i]/PU;
+			r2[2] = r2[2] + Math.pow(nu[i]/PU,2);
+		}
+		
+		if (j==10*PU+1000) {
+			r[3] = r[3] + nu[i]/PU;
+			r2[3] = r2[3] + Math.pow(nu[i]/PU,2);
+		}
+		
+		if (j==10*PU+10000) {
+			r[4] = r[4] + nu[i]/PU;
+			r2[4] = r2[4] + Math.pow(nu[i]/PU,2);
+		}
+		
+	}
+	
+}
+
+var sigma=[];
+var datau=[];
+
+for (var i=0;i<=4;i++) {
+	
+	r[i]=r[i]/Ns;
+	r2[i]=r2[i]/Ns;
+	
+	sigma[i]=Math.sqrt((r2[i]-Math.pow(r[i],2))/Ns);
+	
+	datau[i]=[i,r[i]];
+	
+}
+*/
+
+var dt;
+var PU=5000;
+
+var nu=[],psu;
+
+var Ns=100;
+
+var r=Array(5).fill(0);
+var r2=Array(5).fill(0);
+
+for (var a=0;a<=4;a++) {
+	dt=10**a;
+	//document.write(dt+' borboleta<br><br>');
+	var pu=Array(PU).fill(0);
+	
+	for (var t=0;t<=10*PU;t++) {
+		
+		psu = parseInt(Math.random()*PU);
+		
+		pu[psu] = (pu[psu] + 1)%2;
+		
+	}
+	
+	for (var k=0;k<Ns;k++) {
+		
+		for (var i=0;i<dt;i++) {
+
+			nu[i]=0;
+			
+			psu = parseInt(Math.random()*PU);
+			
+			pu[psu] = (pu[psu] + 1)%2;
+			
+			for (var j=0;j<PU;j++) {
+			
+				nu[i] = nu[i] + pu[j];
+				
+			}
+			
+			r[a] = r[a] + nu[i]/PU;
+			r2[a] = r2[a] + Math.pow(nu[i]/PU,2);
+			
+		}
+		//r[a] = r[a]/dt;
+		//r2[a] = r2[a]/dt;
+	}
+	
+	//R[a]=r[a]/Ns;
+	//R2[a]=r2[a]/Ns;
+	
+}
+
+var sigma=[];
+var datau=[],datau2=[];
+
+for (var i=0;i<=4;i++) {
+	//document.write(r[i]+"<br>"+r2[i]+"<br>");
+	r[i]=r[i]/(Ns*(10**i));
+	r2[i]=r2[i]/(Ns*(10**i));
+	
+	sigma[i]=Math.sqrt((r2[i]-Math.pow(r[i],2))/Ns);
+	//document.write(sigma[i]+"<br>"+r[i]+"<br>"+r2[i]+"<br><br>");
+	datau[i]=[10**i,r[i],sigma[i]];
+	datau2[i]=[10**i,sigma[i]];
+}
+
+var options1 = {
+        lines: { show: false },
+		points: { show: true, errorbars: 'y', yerr: {show: true, color: 'green'}},
+        xaxis: {ticks: [1,10,100,1000,10000],
+				tickColor: "white",
+                transform:  function(v) {return Math.log(v+0.0001);},
+				axisLabel: 't',
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 20,
+				axisLabelFontFamily: 'Arial'
+		},
+		yaxis: {show:true,
+            	//ticks: 5,
+            	tickColor: "gray",
+               	min: 0.492,
+               	max: 0.502,
+               	tickDecimals: 3,
+               	font: { color:"black", size:12 },
+				axisLabel: '<ρ>',
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 20,
+				axisLabelFontFamily: 'Arial'
+				},
+		colors: ["red"]
+
+};
+
+$.plot("#grafico2", [datau], options1);
+/*
+var options2 = {
+        lines: { show: false },
+		points: { show: true },
+        xaxis: {ticks: [1,10,100,1000,10000],
+				tickColor: "white",
+                transform:  function(v) {return Math.log(v+0.0001);},
+				axisLabel: 't',
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 20,
+				axisLabelFontFamily: 'Arial'
+		},
+		yaxis: {show:true,
+            	//ticks: 5,
+            	tickColor: "gray",
+               	//min: 0.496,
+               	//max: 0.504,
+               	tickDecimals: 3,
+               	font: { color:"black", size:12 },
+				axisLabel: '<ρ>',
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 20,
+				axisLabelFontFamily: 'Arial'
+				},
+		colors: ["red"]
+
+};
+
+$.plot("#grafico3", [datau2], options2);
+*/
+</script>

@@ -1,0 +1,5 @@
+https://www.youtube.com/watch?v=YizMU-7jai0&ab_channel=JuergenMarsch
+
+https://github.com/flot/flot/blob/master/API.md#plot-options
+
+https://github.com/xuanluo/flot-axislabels

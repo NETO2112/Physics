@@ -1,0 +1,41 @@
+<html>
+<body>
+
+<div id="fujao" style="width:50;height:50;background-color:red;position:absolute;top:200;left:400" onclick="pare()">
+</div>
+
+<script>
+/*
+var timer = setInterval("ande()",1000);
+
+function ande() {
+	var top = parseInt(Math.random() * 400);
+	var left = parseInt(Math.random() * 400);
+	var el = document.getElementById("fujao");
+	el.style.top = top;
+	el.style.left = left;
+}
+
+function pare() {
+	clearInterval(timer);
+}
+*/
+
+var timer = setInterval("ande()",50);
+var t = 0;
+var dt = 0.1;
+var omega = 1;
+
+function ande() {
+	var top = 200 + 200 * Math.sin(omega * t);
+	var left = 200 + 200 * Math.cos(omega * t);
+	var el = document.getElementById("fujao");
+	el.style.top = top;
+	el.style.left = left;
+	t = t + dt;
+}
+
+</script>
+
+</body>
+</html>

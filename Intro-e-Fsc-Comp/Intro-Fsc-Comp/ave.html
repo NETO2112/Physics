@@ -1,0 +1,16 @@
+<script>
+
+var Z = 2;
+var a0 = 5e-11;
+var r = 2*a0
+
+var p = Math.PI;
+var q = Math.pow( 1/p , 1/2 );
+var w = Math.pow( Z/a0 , 3/2);
+var e = Math.exp( (-Z*r) / a0 );
+
+var t = q * w * e;
+
+document.write(t.toPrecision(1));
+
+</script>

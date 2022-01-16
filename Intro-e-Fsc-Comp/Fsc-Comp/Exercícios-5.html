@@ -1,0 +1,49 @@
+<html>
+<script>
+
+var l=1;
+var a=1;
+var M0i=1;
+var c=1;
+//var M0c=M0/c;
+var q=0.25*l;
+var p=0.33*a;
+var fp=1.4;
+var M0;
+
+function numBx(x,y,z){
+	
+	var Bx=0;
+	var Nx=40;
+	var dx=2*l/Nx;
+	var Ny=40;
+	var dy=2*a/Ny;
+	
+	for (var i=0;i<=Nx;i++) {
+		var xl=-l+i*dx;
+		for (var j=0;j<=Ny;j++) {
+			var yl=-a+j*dy;
+			var denx=Math.pow(Math.pow(x-xl,2)+Math.pow(y-yl,2)+Math.pow(z,2),3/2);
+			if (x*x<Math.pow(l-2*q,2)&&y*y>Math.pow(a-2*p)) M0=1;
+			else M0=M0i*fp;
+				
+			Bx=Bx+M0/c*(x-xl)*dx*dy/denx;
+		}
+	}
+//	document.write("Para x'= "+xl+"<br> Bx= "+Bx+ "<br><br>");
+	return Bx;
+}
+
+//console.log(numBx(-l,0,1));
+//console.log(numBx(l,0,1));
+
+var N=20;
+var dx=2*l/N;
+
+for (var i=0;i<=N;i++) {
+	x=-l+i*dx;
+	document.write("x="+x+"<br> Bx="+numBx(x,0,1)+"<br><br>");
+}
+
+</script>
+</html>

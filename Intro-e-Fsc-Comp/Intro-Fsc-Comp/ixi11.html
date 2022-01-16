@@ -1,0 +1,61 @@
+<html>
+<meta charset="utf-8">
+<body>
+
+<p>Quais das unidades abaixo são unidades de energia?<br></p>
+<input type="checkbox" id="q1" value="0" /> Watt <br> <!-- checked -->
+<input type="checkbox" id="q2" value="1" /> Joule <br>
+<input type="checkbox" id="q3" value="1" /> keV <br>
+
+<input type="button" value="OK" onClick="corrigeQuestao()" />
+
+<p>Qual das fórmulas abaixo está correta?</p>
+<input type="radio" id="p1" name="grupo1" value="1" /> E = mc<sup>2</sup> <br>
+<input type="radio" id="p2" name="grupo1" value="0" /> E = mc<sup>3</sup> <br>
+<input type="radio" id="p3" name="grupo1" value="0" /> E = mc<sup>4</sup> <br>
+
+
+<input type="button" value="OK" onClick="corrigeOutraQuestao()" />
+
+<script>
+function corrigeQuestao() {
+
+	if ((!(document.getElementById("q1").checked)) && 
+	   (document.getElementById("q2").checked) &&
+	   (document.getElementById("q3").checked)) {
+		alert("Parabéns! Você acertou tudo!")
+	}
+	else {
+		alert("Ops! Você errou alguma coisa!");
+	}
+}
+
+function corrigeOutraQuestao() {
+	var acerto = false;
+	for (var i=1;i<=3;i++) {
+		var el = document.getElementById("p"+i);
+		if ((el.value=="1") && (el.checked)) acerto = true;
+	}
+	if (acerto) alert("Parabéns"); else alert("Tente novamente!");
+}
+
+</script>
+
+<br><br>
+
+<select id="select" onChange="verificaEscolha()">
+	<option>-- escolha uma opção --</option>
+	<option>Bacharelado em Meteorologia</option>
+	<option>Bacharelado em Física</option>
+	<option>Licenciatura em Física</option>
+</select>
+
+<script>
+function verificaEscolha() {
+	var val = document.getElementById("select").value;
+	if (!(val=="-- escolha uma opção --")) alert("Você escolheu " + val);
+}
+</script>
+
+</body>
+</html>

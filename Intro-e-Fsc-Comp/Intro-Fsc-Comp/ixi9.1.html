@@ -1,0 +1,31 @@
+<html>
+<body>
+
+<script>
+var str = "";
+str += "<table border='0' cellpadding='15' cellspacing='0' \
+	style='text-align:center;color:rgb(0,150,80);border:3px solid rgb(255,100,100)' \
+	align='center'>"; // str = str + "<table>"
+
+// monta a 1a. linha da tabela
+str += "<tr style='background-color:black'>";
+str += "<th> &times </th>";
+for (var i=1;i<=10;i++) str += "<th>"+i+"</td>"; // <th> == <b>
+str += "</tr>";
+
+//monta o miolo da tabela
+for (var i=1;i<=10;i++) {
+	str += "<tr>"; // abre a linha
+	str += "<th style='background-color:black'>" + i + "</td>" // coloca a primeira linha
+	for (var j=1;j<=10;j++) { // coloca as outras 10 linhas
+		str += "<td style='background-color:rgb("+parseInt((i*j)*255/100+20)+","+parseInt((i*j)*255/100-100)+","+parseInt((i*j)*255/100-50)+");color:rgb("+parseInt(255-(i*j)*255/100)+","+parseInt(255-(i*j)*255/100)+","+parseInt(255-(i*j)*255/100)+")'>" + (i*j) + "</td>";
+	}
+	str += "</tr>"; // fecha a linha
+}
+
+str += "</table>";
+document.write(str);
+</script>
+
+</body>
+</html>

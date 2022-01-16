@@ -1,0 +1,5 @@
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+https://github.com/errcw/gaussian
+
+https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve

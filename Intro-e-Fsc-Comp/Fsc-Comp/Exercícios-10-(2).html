@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <script
+    src="http://canzian.fsc.ufsc.br/Plotly/plotly-latest.min.js">
+  </script>
+</head>
+
+<body>
+
+<div id="divGraf1" style="width:500px;height:500px"></div>
+<div id="divGraf2" style="width:500px;height:500px"></div>
+<div id="divGraf3" style="width:500px;height:500px"></div>
+
+<script>
+
+var B1 = 0, B2 = 0, B3 = 1;
+var q = 1;
+var m = 1;
+var dt = 0.001;
+
+var F = [0,0,0];
+var v = [0,-1,0];
+var B = [0,0,1];
+var r = [1,0,1];
+var a = [0,0,0];
+
+var npts = 100000;
+
+var x=[];
+var y=[];
+var t=[];
+
+for (var i=0;i<npts;i++) {
+	
+	t[i]=i*dt;
+	x[i] = r[0];
+	y[i] = r[1];
+
+	F[0] = q*(v[1]*B[2]-v[2]*B[1]);
+	F[1] = q*(v[2]*B[0]-v[0]*B[2]);
+	F[2] = q*(v[0]*B[1]-v[1]*B[0]);
+
+	a[0] = F[0]/m, a[1] = F[1]/m, a[2] = F[2]/m;
+
+	v[0]= v[0]+a[0]*dt, v[1]= v[1]+a[1]*dt, v[2]= v[2]+a[2]*dt;
+
+	r[0] =r[0]+v[0]*dt, r[1] = r[1] + v[1]*dt, r[2] = r[2] + v[2]*dt;
+
+//	B[0] = B1, B[1] = B2, B[2] = B3;
+
+//	document.write(r[0]+"<br>"+r[1]+"<br>"+r[2]+"<br><br>");
+
+}
+
+var dadosx = [{x: t, y: x, mode: "lines", name: "Posição x", line: {color:"red"}}];
+var dadosy = [{x: t, y: y, mode: "lines", name: "Posição y", line: {color:"red"}}];
+var dadosxy = [{x: x, y: y, mode: "lines", name: "Posição", line: {color:"red"}}];
+
+var layout = {title: "Posições",showlegend:true};
+
+Plotly.newPlot("divGraf1",dadosx,layout);
+Plotly.newPlot("divGraf2",dadosy,layout);
+Plotly.newPlot("divGraf3",dadosxy,layout);
+
+</script>
+</html>

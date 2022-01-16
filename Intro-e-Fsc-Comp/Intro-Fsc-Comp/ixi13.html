@@ -1,0 +1,43 @@
+<html>
+<body>
+
+<div align="center">
+
+<canvas id="cnv" width="400" height="400"
+	style="background-color:rgb(230,230,230)"></canvas>
+
+</div>
+
+<script>
+
+var ctx = document.getElementById("cnv").getContext("2d");
+ctx.setTransform(400/(2*Math.PI),0,0,-300/2,200,150);
+ctx.lineWidth = 2/300; // 2*Math.PI/400
+
+ctx.beginPath();
+ctx.moveTo(-Math.PI,1*Math.sin(-Math.PI));
+for (var x=-Math.PI; x<=+Math.PI; x = x + Math.PI/50) {
+	ctx.lineTo(x,Math.sin(x));
+}
+ctx.stroke();
+
+
+var xmin = -Math.PI;
+var xmax = +Math.PI;
+var N = 50;
+var dx = (xmax-xmin)/N;
+ctx.beginPath();
+ctx.strokeStyle = "red";
+var x = xmin;
+var y = 1*Math.cos(x);
+for (var i=0; i<N; i++) {
+	x = xmin + i*dx;
+	y = 1*Math.cos(x);
+	ctx.lineTo(x,y);
+}
+ctx.stroke();
+
+</script>
+
+</body>
+</html> 

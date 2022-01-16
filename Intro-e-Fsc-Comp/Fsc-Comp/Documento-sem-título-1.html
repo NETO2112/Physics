@@ -1,0 +1,30 @@
+<p style="text-align:center">
+<canvas id="cnv" width="300" height="300"
+        style="border:1px solid black">
+</canvas>
+</p>
+<script>
+var cnv = document.getElementById("cnv");
+var ctx = cnv.getContext("2d");
+134
+for (var i=0;i<4;i++) {
+   ctx.translate(60,60);
+   var Tx = 100*parseInt(1+Math.random()*7);
+   var Ty = 100*parseInt(1+Math.random()*9);
+   lissajous(ctx,Tx,Ty);
+}
+function lissajous(lctx,Tx,Ty) {
+   var x = 0;
+   var y = 25;
+   lctx.beginPath();
+   lctx.lineWidth = 1;
+   lctx.strokeStyle = "black";
+   lctx.moveTo(x,y);
+   for (var t=0;t<2000;t++) {
+      x = 25 * Math.sin(2*Math.PI*(t/Tx));
+      y = 25 * Math.cos(2*Math.PI*(t/Ty));
+      lctx.lineTo(x,y);
+   }
+   lctx.stroke();
+}
+</script>

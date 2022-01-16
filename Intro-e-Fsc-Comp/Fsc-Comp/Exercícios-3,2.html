@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+	<meta charset="utf-8">
+	<script src="http://canzian.fsc.ufsc.br/Plotly/plotly-latest.min.js">
+	</script>
+</head>
+
+<body>
+
+<div id="divGraf1" style="width:500px;height:350px"></div>
+
+<script>
+
+var x=[];
+
+for (var i=0;i<=20;i++){
+	x[i]=-20+2*i;
+}
+
+
+var Bx6 = [388,544,676,764,807,816,807,794,785,781,780,781,785,794,807,816,807,764,676,544,388];
+
+var Bx9 = [311,401,482,545,588,613,625,629,631,631,631,631,631,629,625,613,588,545,482,401,311];
+
+var Bx13=[221,272,319,360,392,416,433,445,452,455,456,455,452,445,433,416,392,360,319,272,221]
+
+var Bx18=[138,166,193,218,239,256,270,280,287,291,293,291,287,280,270,256,239,218,193,166,138]
+
+var Bx24=[70,86,101,115,127,138,147,154,159,162,163,162,159,154,147,138,127,115,101,86,70]
+
+var dados=[{x:x,y:Bx6,mode:"markers",name:"z=6mm"},{x:x,y:Bx9,mode:"markers",name:"z=9mm"},{x:x,y:Bx13,mode:"markers",name:"z=13mm"},{x:x,y:Bx18,mode:"markers",name:"z=18mm"},{x:x,y:Bx24,mode:"markers",name:"z=24mm"}]
+
+var layout={title:"Campo mag de um ímã",showlegend:true,xaxis:{title:'x (mm)',tickformat:'0.0f',showline:true},yaxis:{title:'B<sub>z</sub> (G)',tickformat:'0.0f',showline:false}}
+
+Plotly.newPlot("divGraf1",dados,layout);
+
+</script>
+
+</body>
+
+</html>

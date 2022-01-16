@@ -1,0 +1,148 @@
+<meta charset="utf-8" />
+
+<script>
+
+function dwbr(txt) {
+	document.write(txt + "<br>");
+}
+
+var str = 'Isto é uma "string" e isto é \'outra\' palavra';
+
+//dwbr(str)//document.write(str + "<br>");
+//dwbr(str.length)//document.write(str.length + "<br>");
+//dwbr(str.toUpperCase());
+//dwbr(str.toLowerCase());
+//dwbr(str.substr(10,20));
+//dwbr(str.substring(10,20));
+
+//dwbr(str.split(" "));
+//var m = [];
+//m = str.split("é")
+//for (var i=0;i<m.length;i=i+1) dwbr(m[i]);
+
+//var vet = prompt("Entre com as três componentes do vetor separadas por vírgula:");
+//vet = vet.split(",")
+//for (var i=0;i<vet.length;i=i+1) dwbr(vet[i]);
+
+//for (var i=0;i<10000;i=i+1) {
+//	dwbr(String.fromCharCode(i));
+//}
+
+//dwbr(str.charCodeAt(9));
+//for (var i=0;i<str.length;i=i+1) {
+//	document.write(str.charCodeAt(i) + " ");
+//}
+//dwbr(String.fromCharCode(97));
+//dwbr(str.indexOf("a"));
+
+//var i = 10;
+//document.write(i.toString(2) + "<br>"); //2 binário  16 hexadecimal
+
+/////////// 7 - 1 ////////////
+/*
+var input = prompt("Entre com três pares de números separados por vírgula:","0,0,0,0,0,0,0,0");
+
+var aux = input.split(",");
+
+for (var i=0;i<aux.length;i=i+1) {
+	aux[i] = parseFloat(aux[i]);
+}
+
+//for (var i=0;i<aux.length;i=i+1) document.write(aux[i] + "<br>");
+
+var pontos = [ [ aux[0],aux[1] ],
+	       [ aux[2],aux[3] ], 
+	       [ aux[4],aux[5] ]];
+
+for (var i=0;i<pontos.length;i=i+1) {
+	for (var j=0;j<pontos[i].length;j=j+1) {
+		document.write(pontos[i][j] + " ");
+	}
+	document.write("<br>");
+}
+*/
+
+//////////// 7 - 2 /////////////
+
+var cpf = "000.000.000-00";
+var m = [];
+
+var cnt = 0; // contador
+for (var i=0;i<cpf.length;i++) { // i++  =  i=i+1
+	var aux = parseInt(cpf.charAt(i));
+	if (!isNaN(aux)) {
+		m[cnt] = aux;
+		cnt++;
+	}
+}
+
+document.write(m + "<br>");
+
+var digito1;
+var digito2;
+var soma = 0;
+var fator = 10;
+for (var i=0;i<9;i++) {
+	soma = soma + m[i] * fator;
+	fator = fator - 1;
+}
+var resto = soma % 11; // % resto da divisão
+if (resto<2) {
+	digito1 = 0;
+}
+else {
+	digito1 = 11 - resto;
+}
+m[9]=digito1
+document.write("Soma: " + soma + ", fator: " + fator + "<br>");
+document.write(digito1 + "<br>")
+
+var soma = 0;
+var fator = 11;
+for (var i=0;i<10;i++) {
+	soma = soma + m[i] * fator;
+	fator = fator - 1;
+}
+var resto = soma % 11; // % resto da divisão
+if (resto<2) {
+	digito2 = 0;
+}
+else {
+	digito2 = 11 - resto;
+}
+m[10]=digito2
+document.write("Soma: " + soma + ", fator: " + fator + "<br>");
+document.write(digito2 + "<br>")
+
+document.write(m)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

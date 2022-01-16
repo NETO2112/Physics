@@ -1,0 +1,80 @@
+<html>
+<script>
+
+function cBxp(x,y,z,a,l) {
+
+	var M0=1;
+	var c=1;
+	var fp=1.4;
+	var q=0.25*l;
+	var p=0.33*a;
+	
+	function cBx(x,y,z,a,l) {
+		var n1x=((y-a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+		var n2x=((y+a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d1x=((y+a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d2x=((y-a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	
+		var Bx=M0/c*Math.log((n1x/d1x)*(n2x/d2x));
+		return Bx;
+	}
+
+	var N=20;
+	var dx=2*2*l/N;
+	
+	var lPart = [l-2*q,q,l-2*q,q,l-2*q];
+	var aPart = [a-2*p,a,p,a,p];
+	var dxPart = [0,l-q,0,-(l-q),0];
+	var dyPart = [0,0,(a-p),0,-(a-p)];
+	
+	var Bx=0;
+	
+	for (var j=0;j<lPart.length;j++) {
+		var nx = x-dxPart[j];
+		var ny = y-dyPart[j];
+		Bx = Bx + cBx(nx,ny,z,aPart[j],lPart[j]);
+	}
+	return Bx;
+}
+
+var l=1;
+var a=1;
+
+var N = 20;
+var dx = 2*(2*l)/N;
+var BxParts = [];
+for (var i=0;i<=N;i++) {
+	var x = -2*l + i*dx;
+	var y = 0;
+	var z = 1;
+	BxParts[i] = cBxp(x,y,z,a,l);
+	document.write(+BxParts[i]+"<br>");
+}
+
+var nP=1000000;
+
+var ini1= new Date();
+
+for (var i=0;i<nP;i++) {
+	x=-2*l+Math.random()*4*l;
+	for (var j=1;j<BxParts.length;j++) {
+		var xSup=-2*l+j*dx;
+		if (xSup>x) break;
+	}
+	var xInf=xSup-dx;
+	j=j-1;
+	var Bx=BxParts[j]+(x-xInf)*(BxParts[j+1]-BxParts[j])/dx;
+}
+var ter1=new Date();
+console.log(ter1-ini1);
+
+var ini2=new Date();
+for (var i=0;i<nP;i++) {
+	x=-2*l+Math.random()*4*l;
+	var Bx=cBxp(x,y,z,a,l);
+}
+var ter2=new Date();
+console.log(ter2-ini2);
+
+</script>
+</html>

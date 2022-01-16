@@ -1,0 +1,81 @@
+<html>
+<script>
+
+function cBxp(x,y,z,a,l) {
+
+	var M0=1;
+	var c=1;
+	var fp=1.4;
+	var q=0.25*l;
+	var p=0.33*a;
+	
+	function cBx(x,y,z,a,l) {
+		var n1x=((y-a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+		var n2x=((y+a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d1x=((y+a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d2x=((y-a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	
+		var Bx=M0/c*Math.log((n1x/d1x)*(n2x/d2x));
+		return Bx;
+	}
+
+	var N=20;
+	var dx=2*2*l/N;
+	
+	var lPart = [l-2*q,q,l-2*q,q,l-2*q];
+	var aPart = [a-2*p,a,p,a,p];
+	var dxPart = [0,l-q,0,-(l-q),0];
+	var dyPart = [0,0,(a-p),0,-(a-p)];
+	
+	var Bx=0;
+	
+	for (var j=0;j<lPart.length;j++) {
+		var nx = x-dxPart[j];
+		var ny = y-dyPart[j];
+		Bx = Bx + cBx(nx,ny,z,aPart[j],lPart[j]);
+	}
+	return Bx;
+}
+
+var x=0, y=0, z0=0.0001;
+var M0=1, c=1, l=1, a=1;
+
+var N=20;
+var dx=2*(2*l)/N;
+var dz=1;
+var BxParts=[];
+for (var i=0; i<=4; i++){
+	var z=z0+i;
+	BxParts[i]=[];
+	for (var j=0; j<=N; j++){
+		var x=-2*l + j*dx;
+		BxParts[i][j] = cBxp(x,y,z,a,l);
+	}
+}
+
+var nPts=100;
+for (var i=0; i<=nPts; i++){
+	x = -2*l + Math.random()*4*l;
+	z = z0 + Math.random()*4;
+	for (var j=1; j<BxParts[0].length; j++){
+		var xSup = -2*l + j*dx;
+		if (xSup>x) break;
+	}
+	var xInf = xSup - dx;
+	j=j-1;
+	for (var k=1; k<BxParts.length; k++){
+		var zSup = z0 + k*dz;		
+		if (zSup>z) break;
+	}
+	var zInf = zSup - dz;
+	k=k-1;
+	var r = (x-xInf)/(xSup-xInf);
+	var s = (z-zInf)/(zSup-zInf);
+	var BxI = (1-r)*(1-s)*BxParts[k][j] + r*(1-s)*BxParts[k+1][j] + (1-r)*s*BxParts[k][j+1] + r*s*BxParts[k+1][j+1];
+	var BxE = cBxp(x,y,z,a,l);
+	document.write(+i+"<br>Para x= "+x+" e z = " +z+ "<br>Bx Interpolado = " + BxI + "<br>Bx Exato = " + BxE + "<br><br>");
+
+}
+</script>
+</script>
+</html>

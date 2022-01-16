@@ -1,0 +1,193 @@
+<script src="../../0/jquery.js"></script>
+<script src="../../0/jquery.flot.js"></script>
+<script src="../../0/jquery.flot.errorbars.js"></script>
+<script src="../../0/jquery.flot.axislabels.js"></script>
+
+<div align="center"><h1>Caminhos aleatórios de 3 caminhantes</h1></div>
+<div id="grafico" align="center" style="width:1000px; height:300px"></div>
+<div align="center"><h1>Média quadrática pelo tempo de 100 caminhantes</h1></div>
+<div id="grafico2" style="width:1000px; height:300px"></div>
+
+<script type="text/javascript">
+
+var steps=100;
+
+var x = 0;
+var posição = [];
+posição[0] = [0,0];
+
+var x2 = 0;
+var posição2 = [];
+posição2[0] = [0,0];
+
+var x3 = 0;
+var posição3 = [];
+posição3[0] = [0,0];
+
+for (var i=1;i<=steps;i++) {
+	
+	var m = Math.random();
+	var m2 = Math.random();
+	var m3 = Math.random();
+	
+	if (m>0.5) x = x + 1;
+	else x = x - 1;
+
+	if (m2>0.5) x2 = x2 + 1;
+	else x2 = x2 - 1;
+
+	if (m3>0.5) x3 = x3 + 1;
+	else x3 = x3 - 1;
+	
+	posição[i] = [i,x];
+	posição2[i] = [i,x2];
+	posição3[i] = [i,x3];
+}
+
+var data = [{ data:posição,  label:"Caminhante 1", lines: {show:true}},
+			{ data:posição2, label:"Caminhante 2", lines: {show:true}},
+			{ data:posição3, label:"Caminhante 3", lines: {show:true}}];
+
+var options = { legend:{position:"nw"}, 
+				colors: ["#8F33FF","#FF0000","#00FF00"],
+				xaxis: {
+            		ticks: 10,
+            		tickColor: "white",
+                    //min:0,
+                    //max:1.5,
+                    tickDecimals: 0,
+                	font: { color:"black", size:12 },
+					axisLabel: 'TEMPO',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 20,
+					axisLabelFontFamily: 'Arial'
+				},
+				yaxis: {show:true,
+            		ticks: 5,
+            		tickColor: "white",
+                	//min: -30,
+                	//max: 30,
+                	tickDecimals: 0,
+                	font: { color:"black", size:12 },
+					axisLabel: 'POSIÇÃO',
+					axisLabelUseCanvas: true,
+					axisLabelFontSizePixels: 20,
+					axisLabelFontFamily: 'Arial'
+				}};
+
+$.plot("#grafico", data , options  );
+
+//até aqui era do gráfico 1
+
+/*
+var s2=[];
+var s4=[];
+s2[0]=[];
+s2[0][1]=0;
+for (var i=0;i<=100;i++) { //esse é o tempo
+
+	var x=0;
+
+
+	
+	for (var j=0;j<=100;j++) { //esse são os caminhantes
+	
+		if (j==0) s2[i] = [i,s2[i][1]];
+		else {
+	
+			var n = Math.random();
+		
+			if (n<0.5) x = x + 1;
+			else x = x - 1;
+			
+			//s2[i] = [ i , s2[i][1]+ (x*x)/j ];
+			s2[i][1] = s2[i][1] + (x*x);
+
+		}
+		
+		s2[i]=[i,s2[i][1]/100];
+		
+	}
+	if (i<=99) s2[i+1]=[i+1,s2[i][1]];
+	else continue;
+
+}
+
+for (var i=0;i<=100;i++) {
+	s2[i][1]=s2[i][1]/100;
+	document.write(i + ': ' +s2[i][1]+"<br>"+s2[i+1][1]+"<br><br>");
+}
+
+$.plot("#grafico2", [s2]   );
+*/
+
+
+var caminhantes=100;
+
+var s2=[],s4=[];
+
+
+for (var i=0;i<=steps;i++) {
+	s2[i]=0,s4[i]=0;
+}
+
+for (var i=0;i<=caminhantes;i++) {
+	
+	var x=0;
+
+	for (var j=0;j<=steps;j++) {
+		
+		var n = Math.random();
+		
+		if (n>0.5) x = x + 1;
+		else x = x - 1;
+
+		s2[j]=s2[j] + x*x;
+		s4[j]=s4[j] + x**4;
+		
+	}
+	//document.write(s2+"<br>");
+	//document.write("<br><br>");
+}
+
+var y2=[],y4=[];
+var posições=[];
+var sigma=[];
+
+for (var i=0;i<=steps;i++) {
+	y2[i] = s2[i]/steps;
+	y4[i] = s4[i]/steps;
+	if (i==0) sigma[i]=0;
+	else sigma[i]= Math.sqrt((y4[i]-y2[i]**2)/(caminhantes-1));
+	posições[i] = [i,y2[i],sigma[i]];
+	//document.write("s2 = " + y2[i] + "<br>s4 = " + y4[i] + "<br>sg = " + sigma[i] + "<br><br>");
+}
+
+var options2 = {
+	points: { show: false, errorbars: 'y', yerr: {show: true, color: 'violet'} },
+    xaxis: {
+			ticks: 5,
+			tickColor: "white",
+			tickDecimals: 0,
+			font: { color:"black", size:12 },
+			axisLabel: 'TEMPO',
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 20,
+			axisLabelFontFamily: 'Arial'
+            },
+	yaxis: {
+			ticks: 2,
+			tickColor: "white",
+			tickDecimals: 0,
+			font: { color:"black", size:12 },
+			axisLabel: '<x²>',
+			axisLabelUseCanvas: true,
+			axisLabelFontSizePixels: 20,
+			axisLabelFontFamily: 'Arial'
+            },
+	colors: ["red"]
+}
+
+$.plot("#grafico2", [posições], options2  );
+
+</script>

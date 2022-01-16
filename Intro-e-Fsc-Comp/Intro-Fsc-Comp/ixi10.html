@@ -1,0 +1,50 @@
+<html>
+
+<script>
+function facaAlgo() {
+	var a = parseFloat(document.getElementById("op1").value);
+	var b = parseFloat(document.getElementById("op2").value);
+	document.getElementById("res").value = (a+b);
+}
+</script>
+
+<body> <!--style="border: 1px solid black" onClick="facaAlgo()"-->
+
+<input type="text" size="3" value="0" id="op1" />
++
+<input type="text" size="3" value="0" id="op2" />
+
+<input type="button" value=" = " onClick="facaAlgo()"/>
+
+<input type="text" size="3" value="0" id="res" />
+
+<br><br>
+
+<div id="caixa" style="position:absolute;top:200;left:400;width:20;height:20
+	;background-color:red">
+</div>
+
+<div style="text-align-:center;border:1px solid black;width:300;">
+	-10 <input type="range" min="-10" max="10" value="0" id="vel" 
+		   onChange="atualiza()" /> 10
+	
+	<div id="velDiv">
+
+		<script>document.write(document.getElementById("vel").value)</script>
+
+	</div>
+
+</div>
+
+<script>
+function atualiza() {
+	document.getElementById("velDiv").innerHTML =
+		document.getElementById("vel").value;
+	var x = parseInt(document.getElementById("caixa").style.left);
+	document.getElementById("caixa").style.left = x + parseInt(document.getElementById("vel").value)*5;
+}
+</script>
+
+</body>
+
+<html>

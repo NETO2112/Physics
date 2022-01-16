@@ -1,0 +1,14 @@
+<script>
+
+var k = 8.99e9; // N.m^2/C
+var q = 1.602e-19; // C
+var x = 1.00e-9; // m
+var y = 2.00e-9; // m
+var z = 3.00e-9; // m
+
+var Ex = ( k * q * x ) / Math.pow( x*x + y*y + z*z , 3/2 );
+var Ey = ( k * q * y ) / Math.pow( x*x + y*y + z*z , 3/2 );
+//var Ez = ( k * q * z ) / ( xe2 + ye2 + ze2)e(3/2);
+
+document.write(Ex)
+</script>

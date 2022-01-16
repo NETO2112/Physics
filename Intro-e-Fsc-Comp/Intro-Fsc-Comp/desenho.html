@@ -1,0 +1,29 @@
+<html>
+<body>
+
+<div align="center">
+
+<canvas id="cnv" width="600" height="600"
+	style="background-color:rgb(255,255,255);
+	border:1px solid black"></canvas>
+
+</div>
+
+<script>
+//ctx.setTransform(escX,dist,dist,escY,dx,dy)
+
+var ctx = document.getElementById("cnv").getContext("2d");
+ctx.setTransform(600/600,0,0,-600/600,300,300);
+ctx.lineWidth = 600/600;
+
+ctx.beginPath();
+ctx.strokeStyle = "blue";
+ctx.moveTo(-300,-100 + 20*Math.sin(-300/20));
+for (var x=-300; x<=+300; x++) {
+	ctx.lineTo(x,-100 + 20*Math.sin(x/20));
+}
+ctx.stroke();
+
+</script>
+</body>
+</html>

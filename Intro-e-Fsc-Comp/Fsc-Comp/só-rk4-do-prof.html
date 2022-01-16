@@ -1,0 +1,139 @@
+
+
+<script src="http://canzian.fsc.ufsc.br/flot/jquery.js"></script>
+<script src="http://canzian.fsc.ufsc.br/flot/jquery.flot.js"></script>
+
+
+<div id="grafico" style="width:400px; height:300px"></div>
+
+
+
+<script>
+var B0 = 1;
+var qm  = 1;
+var rIni = 1;
+var vIni = rIni*qm*B0;
+var T = 2*Math.PI*rIni/vIni;
+var omega = 2*Math.PI/T;
+
+function fdrdt(r,v) {
+	return v;
+}
+
+function fdvdt(r,v) {
+	var B = [0,0,-B0];
+	var ac = [];
+	ac[0] = qm * (v[1]*B[2]-v[2]*B[1]);
+	ac[1] = qm * (v[2]*B[0]-v[0]*B[2]);
+	ac[2] = qm * (v[0]*B[1]-v[1]*B[0]);
+    return ac;
+}
+
+function RK4Step(r,v,h) {
+
+	var r0 = []; var v0 = [];
+	for (var i=0;i<r.length;i++) {
+		r0[i] = r[i];
+		v0[i] = v[i];
+	}
+    var kr0 = fdrdt(r,v);
+    var kv0 = fdvdt(r,v);
+
+	var r1 = [];  var v1 = [];
+	for (var i=0;i<r.length;i++) {
+		r1[i] = r[i] + 0.5*h*kr0[i];
+		v1[i] = v[i] + 0.5*h*kv0[i];
+	}
+    var kr1 = fdrdt(r1,v1);
+    var kv1 = fdvdt(r1,v1);
+
+	var r2 = []; var v2 = [];
+	for (var i=0;i<r.length;i++) {
+		r2[i] = r[i] + 0.5*h*kr1[i];
+		v2[i] = v[i] + 0.5*h*kv1[i];
+	}
+    var kr2 = fdrdt(r2,v2);
+    var kv2 = fdvdt(r2,v2);
+
+	var r3 = []; var v3 = [];
+	for (var i=0;i<r.length;i++) {
+		r3[i] = r[i] + h*kr2[i];
+		v3[i] = v[i] + h*kv2[i];
+	}
+    var kr3 = fdrdt(r3,v3);
+    var kv3 = fdvdt(r3,v3);
+
+	var rRes = [];
+	var vRes = [];
+
+	for (var i=0;i<r.length;i++) {
+		rRes[i] = r[i]+h/6*(kr0[i]+2*(kr1[i]+kr2[i])+kr3[i]);
+		vRes[i] = v[i]+h/6*(kv0[i]+2*(kv1[i]+kv2[i])+kv3[i]);
+	}
+
+	return [ rRes, vRes ];  // rRes e vRes são vetores!!!
+}
+
+function RK4(r, v, h, n) {
+    var values = [];
+    values[0] = [r, v];
+    for (var i = 1; i < n; i++) {
+			  var rAux = values[i-1][0];
+			  var vAux = values[i-1][1];
+        values[i] = RK4Step(rAux, vAux, h);
+    }
+    return values;
+}
+
+var rk = RK4([0,-rIni,0],[vIni,0,0],0.1,1000);
+
+var str = "<table align=center style='text-align:center' border=1 width=500>";
+str += "<tr><td colspan=3>posicao</td><td colspan=3>velocidade</td></tr>";
+str += "<tr><td>ex</td><td>rk4</td><td>eu</td><td>ex</td><td>rk4</td><td>eu</td></tr>";
+for (var i=0;i<ex.length;i++) {
+	str += "<tr>";
+	str += 	"<td>" + ex[i][0][0].toFixed(3) + "</td>" +
+			"<td>" + rk[i][0][0].toFixed(3) + "</td>" +
+			"<td>" + eu[i][0][0].toFixed(3) + "</td>" +
+			"<td>" + ex[i][0][1].toFixed(3) + "</td>" +
+			"<td>" + rk[i][0][1].toFixed(3) + "</td>" +
+			"<td>" + eu[i][0][1].toFixed(3) + "</td>" ;
+	str += "</tr>";
+}
+str += "</table>";
+document.write(str);
+
+var grEx = [];
+var grEu = [];
+var grRK = [];
+
+for (var i=0;i<ex.length;i++) {
+	grRK[i] = [0.1*i, rk[i][0][0]];
+}
+
+var grOpt = {
+            legend: { show: true, position: "ne" },
+            lines: 	{ show: true },
+            points: { show: false },
+            xaxis: {
+            		ticks: 5,
+            		tickColor: "gray",
+                    //min:0,
+                    //max:1.5,
+                    tickDecimals: 2,
+                	font: { color:"black", size:12 }
+            },
+            yaxis: {
+            		ticks: 5,
+            		tickColor: "gray",
+                	min: -20,
+                	max: 20,
+                	tickDecimals: 1,
+                	font: { color:"black", size:12 }
+            },
+            colors: ["red","green","blue"]
+        }
+
+$.plot("#grafico", [ grEx, grEu, grRK ] , grOpt );
+
+</script>

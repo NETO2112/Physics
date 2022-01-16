@@ -1,0 +1,48 @@
+<script>
+
+var y0 = 2; // m
+var vy0 = 0; // m/s
+var ay = -9.8; // m/s^2
+var dt = 0.01;
+
+/*
+for (var t=0;t<10;t=t+dt) {
+	var y = y0 + vy0 + ay*t*t/2;
+	document.write(t.toFixed(2) + "s " + y.toFixed(2) + "m" + "<br>");
+	if (y<-0) break;
+}
+*/
+
+var t = 0;
+var y = y0;
+
+/*
+while (y>0) {
+	y = y0 + vy0 + ay*t*t/2;
+	document.write(t.toFixed(2) + "s " + y.toFixed(2) + "m" + "<br>");
+	t = t + dt;
+}
+*/
+
+/*
+do {
+	y = y0 + vy0 + ay*t*t/2;
+	document.write(t.toFixed(2) + "s " + y.toFixed(2) + "m" + "<br>");
+	t = t + dt; // alternativamente t += dt
+} while ( y>0 )
+*/
+
+// calcula o seno do ângulo até o usuário digitar s
+
+/*
+var x = 0;
+while (x!="s") {
+	var x = prompt("Entre com o ângulo em graus: ",0);
+	rad = parseFloat(x) * Math.PI/180;
+	alert("sen("+x+")= " + Math.sin(rad));
+}
+*/
+
+var x = parseFloat(prompt());
+alert(x);
+</script>

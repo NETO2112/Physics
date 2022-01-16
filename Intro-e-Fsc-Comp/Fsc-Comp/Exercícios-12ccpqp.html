@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <script
+    src="http://canzian.fsc.ufsc.br/Plotly/plotly-latest.min.js">
+  </script>
+</head>
+
+<body>
+
+<div id="divGraf1" style="width:500px;height:500px"></div>
+<div id="divGraf2" style="width:500px;height:500px"></div>
+<div id="divGraf3" style="width:500px;height:500px"></div>
+
+<script>
+
+var B1 = 0, B2 = 0, B3 = 1;
+var q = 1;
+var m = 1;
+var dt = 0.1;
+
+var F = [0,0,0];
+var v = [0,-1,0];
+var B = [0,0,1];
+var r = [1,0,1];
+var A = [0,0,0];
+
+var npts = 1000;
+
+var x=[];
+var y=[];
+var z=[];
+var t=[];
+
+var K=[];
+
+for (var i=0;i<=1;i++) { //0 = kv, 1 = kr
+	K[i]=[];
+	for (var j=0;j<=3;j++) { // j=k(j+1)
+		K[i][j]=[]; //0=x, 1=y, 2=z
+	}
+}
+
+
+function RK4(r0,r1,r2,v0,v1,v2) {
+
+	var r=[r0,r1,r2];
+	var v=[v0,v1,v2];
+
+	var kvr=[];
+	for (var i=0;i<=1;i++) { //0~v 1~r
+		kvr[i]=[];
+	}
+
+	var R=[]
+	var R1=[];
+	for (var i=0;i<=2;i++) {
+		R1[i]=r[i];
+		R[i]=r[i];
+	}
+
+	var V=[]
+	var V1=[];
+	for (var i=0;i<=2;i++) {
+		V[i]=v[i];
+		V1[i]=v[i];
+	}
+
+	for (var k=0;k<=3;k++) {
+
+		for (var j=0;j<=2;j++) {
+			R[0] = R1[0];
+			R[1] = R1[1];
+			R[2] = R1[2];
+
+			V[0] = V1[0];
+			V[1] = V1[1];
+			V[2] = V1[2];
+
+			B[0] = 0;
+			B[1] = 0;
+			B[2] = 1;
+
+			F[0] = q*(V[1]*B[2]-V[2]*B[1]);
+			F[1] = q*(V[2]*B[0]-V[0]*B[2]);
+			F[2] = q*(V[0]*B[1]-V[1]*B[0]);
+
+			A[0] = F[0]/m;
+			A[1] = F[1]/m;
+			A[2] = F[2]/m;
+
+			K[0][k][j]=A[j]*dt;
+			K[1][k][j]=V[j]*dt;
+		}
+
+		if (k==3) break;
+		if (k<2) {
+			for (var j=0;j<=2;j++) {
+				R1[j] = r[j] + K[1][k][j]/2;
+				V1[j] = v[j] + K[0][k][j]/2;
+			}
+		}
+		else {
+			for (var j=0;j<=2;j++) {
+				R1[j] = r[j] + K[1][k][j];
+				V1[j] = v[j] + K[0][k][j];
+			}
+		}
+	}
+	
+	for (var j=0;j<=2;j++) {
+		kvr[0][j] = (1/6)*(K[0][0][j]+2*K[0][1][j]+2*K[0][2][j]+K[0][3][j]);
+		kvr[1][j] = (1/6)*(K[1][0][j]+2*K[1][1][j]+2*K[1][2][j]+K[1][3][j]);
+	}
+	return kvr;
+}
+
+for (var i=0;i<npts;i++) {
+
+	t[i] = i*dt;
+	x[i] = r[0];
+	y[i] = r[1];
+	z[i] = r[2];
+
+	v[0] = v[0] + RK4(r[0],r[1],r[2],v[0],v[1],v[2])[0][0];
+	v[1] = v[1] + RK4(r[0],r[1],r[2],v[0],v[1],v[2])[0][1];
+	v[2] = v[2] + RK4(r[0],r[1],r[2],v[0],v[1],v[2])[0][2];
+
+	r[0] = r[0] + RK4(r[0],r[1],r[2],v[0],v[1],v[2])[1][0];
+	r[1] = r[1] + RK4(r[0],r[1],r[2],v[0],v[1],v[2])[1][1];
+	r[2] = r[2] + RK4(r[0],r[1],r[2],v[0],v[1],v[2])[1][2];
+
+	//document.write(x[i]+"<br>"+y[i]+"<br>"+z[i]+"<br><br>");
+}
+
+var dadosxz = [{x: t, y: x, mode: "lines", name: "Posiçãox", line: {color:"red"}}];
+var dadosyz = [{x: t, y: y, mode: "lines", name: "Posiçãoy", line: {color:"red"}}];
+var dadosxy = [{x: x, y: y, mode: "lines", name: "Posiçãoxy", line: {color:"red"}}];
+
+var layout = {title: "Posições",showlegend:true};
+
+Plotly.newPlot("divGraf1",dadosxz,layout);
+Plotly.newPlot("divGraf2",dadosyz,layout);
+Plotly.newPlot("divGraf3",dadosxy,layout);
+
+</script>
+</html>

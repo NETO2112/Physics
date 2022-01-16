@@ -1,0 +1,107 @@
+<html>
+<script>
+
+function cBxp(x,y,z,a,l) {
+
+	var M0=1;
+	var c=1;
+	var fp=1.4;
+	var q=0.25*l;
+	var p=0.33*a;
+	
+	function cBx(x,y,z,a,l) {
+		var n1x=((y-a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+		var n2x=((y+a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d1x=((y+a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d2x=((y-a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	
+		var Bx=M0/c*Math.log((n1x/d1x)*(n2x/d2x));
+		return Bx;
+	}
+
+	var N=20;
+	var dx=2*2*l/N;
+	
+	var lPart = [l-2*q,q,l-2*q,q,l-2*q];
+	var aPart = [a-2*p,a,p,a,p];
+	var dxPart = [0,l-q,0,-(l-q),0];
+	var dyPart = [0,0,(a-p),0,-(a-p)];
+	
+	var Bx=0;
+	
+	for (var j=0;j<lPart.length;j++) {
+		var nx = x-dxPart[j];
+		var ny = y-dyPart[j];
+		Bx = Bx + cBx(nx,ny,z,aPart[j],lPart[j]);
+	}
+	return Bx;
+}
+
+var x=0, y=0, z0=0.0001;
+var M0=1, c=1, l=1, a=1;
+
+var N=20;
+var dx=2*(2*l)/N;
+var dy=2*(2*a)/N;
+var dz=1;
+var BxParts=[];
+for (var i=0; i<=4; i++){
+	var z=z0+i;
+	BxParts[i]=[];
+	for (var j=0; j<=N; j++){
+		var x=-2*l + j*dx;
+		BxParts[i][j]=[]; 
+		for (var k=0;k<=N;k++){
+			var y=-2*a+k*dy;
+			BxParts[i][j][k]=cBxp(x,y,z,a,l);
+		}
+	}
+}
+
+var nPts=10;
+for (var i=0; i<nPts; i++){
+	x = -2*l + Math.random()*4*l;
+	z = 2//z0 + Math.random()*4;
+	y = -2*a + Math.random()*4*a;
+
+	for (var m=1; m<BxParts[0].length; m++){
+		var xSup = -2*l + m*dx;
+		if (xSup>x) break;
+	}
+	var xInf = xSup - dx;
+	m=m-1;
+
+	for (var k=1; k<BxParts.length; k++){
+		var zSup = z0 + k*dz;		
+		if (zSup>z) break;
+	}
+	var zInf = zSup - dz;
+	k=k-1;
+
+	for (var j=1;j<BxParts[0][0].length;j++){
+		var ySup=-2*a+j*dy;
+		if (ySup>y) break;
+	}
+	var yInf=ySup-dy;
+	j=j-1;
+
+	var xd=(x-xInf)/(xSup-xInf), yd=(y-yInf)/(ySup-yInf), zd=(z-zInf)/(zSup-zInf);
+	var xd1=(1-xd), yd1=(1-yd), zd1=(1-zd);
+	
+	var g11=BxParts[k][m][j]*xd1 + BxParts[k][m+1][j]*xd;
+	var g12=BxParts[k+1][m][j]*xd1 + BxParts[k+1][m+1][j]*xd;
+	var g21=BxParts[k][m][j+1]*xd1 + BxParts[k][m+1][j+1]*xd;
+	var g22=BxParts[k+1][m][j+1]*xd1 + BxParts[k+1][m+1][j+1]*xd;
+
+	var gxy1 = g11*yd1 + g21*yd;
+	var gxy2 = g12*yd1 + g22*yd;
+
+	var gxyz= gxy1*zd1 + gxy2*zd;
+	
+	var BxE = cBxp(x,y,z,a,l);
+	document.write("Para x= "+x+" y = "+y+" e z = " +z+ " e k= "+k+" e j= "+j+" e m= "+m+"<br>Bx Interpolado = " + gxyz + "<br>Bx Exato = " + BxE + "<br>BxParts= "+BxParts[k][m][j]+"<br>BxParts k + 1 = "+BxParts[k+1][m][j]+"<br>gxyz= "+gxyz+"<br>gxy1= "+gxy1+"<br>gxy2= "+gxy2+"<br>g11= "+g11+"<br>g12= "+g12+"<br>g21= "+g21+"<br>g22= "+g22+"<br>BxParts j+1= "+BxParts[k][m][j+1]+"<br><br>");
+
+}
+</script>
+</script>
+</html>

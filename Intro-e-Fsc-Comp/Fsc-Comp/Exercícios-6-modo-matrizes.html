@@ -1,0 +1,75 @@
+<html>
+<script>
+
+var M0=1;
+var c=1;
+var fp=1.4;
+var l=1;
+var a=1;
+var q=0.25*l;
+var p=0.33*a;
+
+var z=1;
+var y=0;
+
+function cBx(x,y,z,a,l) {
+	var n1x=((y-a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	var n2x=((y+a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d1x=((y+a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d2x=((y-a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+
+	var Bx=M0/c*Math.log((n1x/d1x)*(n2x/d2x));
+	return Bx;
+}
+
+function cBy(x,y,z,a,l) {
+	var n1y=((x-l)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var n2y=((x+l)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	var d1y=((x+l)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d2y=((x-l)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	
+	var By=M0/c*Math.log((n1y/d1y)*(d1y/d2y));
+	return By;
+}
+
+function cBz(x,y,z,a,l) {
+	var n1z=(x+l)*(y+a);
+	var n2z=(x-l)*(y+a);
+	var n3z=(x+l)*(y-a);
+	var n4z=(x-l)*(y-a);
+	var d1z=z*Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2));
+	var d2z=z*Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2));
+	var d3z=z*Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2));
+	var d4z=z*Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2));
+
+	var Bz=M0/c*(Math.atan2(n1z,d1z)-Math.atan2(n2z,d2z)-Math.atan2(n3z,d3z)+Math.atan2(n4z,d4z));
+	return Bz;
+}
+
+var N=20;
+var dx=2*l/N;
+
+var lPart = [l-2*q,q,l-2*q,q,l-2*q];
+var aPart = [a-2*p,a,p,a,p];
+var dxPart = [0,l-q,0,-(l-q),0];
+var dyPart = [0,0,(a-p),0,-(a-p)];
+
+for (var i=0;i<=N;i++) {
+	var x=-l+i*dx;
+	var B1=0;
+	var B2=0;
+	var B3=0;
+	var B=0;
+	for (var j=0;j<lPart.length;j++) {
+		var nx = x-dxPart[j];
+		var ny = y-dyPart[j];
+		B1 = B1 + cBx(nx,ny,z,aPart[j],lPart[j]);
+		B2 = B2 + cBy(nx,ny,z,aPart[j],lPart[j]);
+		B3 = B3 + cBz(nx,ny,z,aPart[j],lPart[j]);
+		B=Math.sqrt(B1*B1+B2*B2+B3*B3);
+	}
+	document.write("Para x = " + x + " <br>B = " + B + "<br><br>");
+}
+
+</script>
+</html>

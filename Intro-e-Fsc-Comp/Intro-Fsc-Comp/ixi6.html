@@ -1,0 +1,143 @@
+<script>
+/*
+
+function randomAB(a,b) {
+	return a + (b-a)*Math.random();
+}
+
+function dwbr(txt) {
+	document.write(txt + "<br>");
+}
+///
+for (var i=0;i<10;i=i+1) dwbr(randomAB(5,15));
+///
+
+function PI(N) {
+//calcula o valor aproximado de PI jogando N sorteios
+	if (N==null) N = 1000;
+	var Np = N;
+	var Nc = 0;
+	var R = 10;
+	for (var i=0;i<Np;i=i+1) {
+		var x = randomAB(0,10);
+		var y = randomAB(0,10);
+		var d = Math.sqrt(x*x+y*y);
+		if (d<R) Nc = Nc + 1;
+	}
+	var pi = 4*Nc/Np;
+	return pi;
+}
+
+for (var i=1;i<=1000000;i=i*10) {
+	var pi = PI(i);
+	dwbr(pi);
+}
+*/
+
+///////////////////////////////////////////////
+
+/*
+function randomAB(a,b) {
+	// caso seja passado 1 parâmetro, a função assume que dever retornar um número entre 0 e o parâmetro fornecido
+	if ( !b ) {
+		b = a;
+		a = 0;
+	}
+	if (!a&&!b) {
+	// caso não sejam passados parâmetros, a função assum que deve retornar um número entre 0 e o 1
+		a = 0;
+		b = 1;
+	}
+	// retorna o número sorteado com os parâmetros passados ou assumido
+	return a + (b-a)*Math.random();
+}
+
+document.write(randomAB() + "<br>");
+document.write(randomAB(100) + "<br>");
+document.write(randomAB(100,200) + "<br>");
+*/
+
+////////////////////////////////////////////////Retornar vetor
+/*
+function produtoEscalar(a,b) {
+	var res = 0;
+	for (var i=0;i<a.length;i=i+1) {
+		res = res + a[i]*b[i];
+	}
+	return res;
+}
+
+function vetRandom() {
+	var x = Math.random();
+	var y = Math.random();
+	var z = Math.random();
+	return [x,y,z];
+}
+//\*
+var v1 = vetRandom();
+var v2 = vetRandom();
+var v1v2 = produtoEscalar(v1,v2);
+document.write(v1v2 + "<br>");
+
+document.write(vetRandom() + "<br>");
+document.write(vetRandom() + "<br>");
+document.write(vetRandom() + "<br>");
+//a*\
+*/
+
+
+//////////////////////////////////////////////////////////////
+
+
+function calCampo(x,y,z) {
+	var k = 9e9;
+	var q = 1.6e-19;
+	var r3 = Math.pow(x*x+y*y+z*z,3/2);
+	var Ex = k*q*x/r3;
+	var Ey = k*q*y/r3;
+	var Ez = k*q*z/r3;
+	return { x:Ex, y:Ey, z:Ez }; //objeto
+}
+
+var E = calCampo(1,2,3);
+document.write(E.x + "<br>");
+document.write(E.y + "<br>");
+document.write(E.z + "<br>");
+//
+var Em = Math.pow(E.x*E.x+E.y*E.y+E.z*E.z,1/2)
+
+document.write(Em)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

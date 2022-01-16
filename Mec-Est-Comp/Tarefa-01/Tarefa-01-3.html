@@ -1,0 +1,163 @@
+<script src="http://canzian.fsc.ufsc.br/flot/jquery.js"></script>
+<script src="http://canzian.fsc.ufsc.br/flot/jquery.flot.js"></script>
+<script src="http://www.flotcharts.org/flot/source/jquery.flot.errorbars.js"></script>
+
+
+<div id="grafico" style="width:1000px; height:300px"></div>
+<div id="grafico2" style="width:1000px; height:300px"></div>
+<div id="grafico3" style="width:1000px; height:300px"></div>
+<div id="grafico4" style="width:1000px; height:300px"></div>
+
+<script>
+
+var x=[]; //cada termo da matriz x será o valor 0 ou 1 da jogada
+var p=[]; //no final não serve para o trabalho, mas serve pra mostrar no gráfico qual o valor da jogada i
+var m=[]; //matriz que dá o valor médio após i jogadas
+var m2=[]; //matriz avek2
+var gs=[]; //matriz pro gráfico de sigma
+
+for (var i=0;i<=100;i++) { //i = jogada
+	var r = Math.random(); //jogada antes de valer 0 ou 1
+	var a=0; //variável que vai guardar o valor médio das jogadas. zerando a cada nova jogada
+	var b=0; //variável que vai guardar o valor médio das jogadas ao quadrado. zerando a cada nova jogada
+
+	var sigma=0; //erro
+
+	if (r<0.5) {
+		x[i]=0;
+	}
+	else {
+		x[i]=1;
+	}
+
+	p[i]=[i,x[i]];
+
+	
+	for (var j=0;j<=i;j++) {
+		a = a + x[j]; //na aula esse seria o medk porém aqui eu zero a cada nova jogada porque uso essa variável como medk no início do laço e no final uso como avek pra salvar dentro da matriz m
+		b = b + x[j]**2; //na aula esse seria o medk2...
+	}
+	
+	a = a/(i+1); //agora o a vira o avek do prof
+	b = b/(i+1); //agora o b vira o avek2 do prof
+	
+	//m[i]=[i,a]; //aqui tá salvando os pontos para colocar no gráfico do valor médio
+	//m2[i]=[i,b]; //aqui tá salvando os pontos para colocar no gráfico do valor médio
+	
+	if (i>0) {
+		sigma = Math.sqrt((b-a**2)/i); //calculando sigma
+	}
+	
+	gs[i] = [i,sigma];
+	
+	m[i]=[i,a,sigma]; //coloquei aqui pra poder salvar o erro sigma
+	m2[i]=[i,b,sigma];
+	
+	document.write(a+" "+b+" "+sigma+"<br>"); //só pra ver os valores
+}
+
+//esse gráfico é o que não serve pro trabalho
+var grOpt = {
+            legend: { show: true, position: "ne" },
+            lines: 	{ show: false },
+            points: { show: true },
+            xaxis: {
+            		ticks: 5,
+            		tickColor: "gray",
+                    //min:0,
+                    //max:1.5,
+                    tickDecimals: 2,
+                	font: { color:"black", size:12 }
+            },
+            yaxis: {
+            		ticks: 5,
+            		tickColor: "gray",
+                	//min: -2,
+                	//max: 2,
+                	tickDecimals: 1,
+                	font: { color:"black", size:12 }
+            },
+            colors: ["red"]
+        }
+
+$.plot("#grafico", [p] , grOpt );
+
+//gráfico do valor médio
+var grOpt = {
+            legend: { show: true, position: "ne" },
+            lines: 	{ show: true },
+            points: { show: false, errorbars: 'y', yerr: {show: true, color: 'violet'} },
+            xaxis: {
+            		ticks: 5,
+            		tickColor: "gray",
+                    //min:0,
+                    //max:1.5,
+                    tickDecimals: 0,
+                	font: { color:"black", size:12 }
+            },
+            yaxis: {
+            		ticks: 2,
+            		tickColor: "gray",
+                	min: 0,
+                	max: 1,
+                	tickDecimals: 1,
+                	font: { color:"black", size:12 }
+            },
+            colors: ["red"]
+        }
+
+$.plot("#grafico2", [m] , grOpt );
+
+//gráfico valor médio ao quadrado
+var grOpt = {
+            legend: { show: true, position: "ne" },
+            lines: 	{ show: true },
+            points: { show: false, errorbars: 'y', yerr: {show: true, color: 'violet'}  },
+            xaxis: {
+            		ticks: 5,
+            		tickColor: "gray",
+                    //min:0,
+                    //max:1.5,
+                    tickDecimals: 0,
+                	font: { color:"black", size:12 }
+            },
+            yaxis: {
+            		ticks: 2,
+            		tickColor: "gray",
+                	min: 0,
+                	max: 1,
+                	tickDecimals: 1,
+                	font: { color:"black", size:12 }
+            },
+            colors: ["black"]
+        }
+
+$.plot("#grafico3", [m2] , grOpt );
+
+//gráfico de sigma
+var grOpt = {
+            legend: { show: true, position: "ne" },
+            lines: 	{ show: true },
+            points: { show: false },
+            xaxis: {
+            		ticks: 5,
+            		tickColor: "gray",
+                    //min:0,
+                    //max:1.5,
+                    tickDecimals: 0,
+                	font: { color:"black", size:12 }
+            },
+            yaxis: {
+            		ticks: 2,
+            		tickColor: "gray",
+                	//min: 0,
+                	//max: 1,
+                	tickDecimals: 1,
+                	font: { color:"black", size:12 }
+            },
+            colors: ["red"]
+        }
+
+$.plot("#grafico4", [gs] , grOpt );
+
+</script>

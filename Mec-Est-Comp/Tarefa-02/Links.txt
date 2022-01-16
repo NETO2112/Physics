@@ -1,0 +1,5 @@
+https://github.com/MichaelZinsmaier/CurvedLines
+
+http://www.flotcharts.org/flot/examples/series-types/index.html
+
+https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/python.html

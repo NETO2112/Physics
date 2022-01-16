@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <script
+    src="http://canzian.fsc.ufsc.br/Plotly/plotly-latest.min.js">
+  </script>
+</head>
+
+<body>
+
+<div id="divGraf1" style="width:500px;height:500px"></div>
+<div id="divGraf2" style="width:500px;height:500px"></div>
+<div id="divGraf3" style="width:500px;height:500px"></div>
+
+<script>
+
+var B1 = 0, B2 = 0, B3 = 1;
+var q = 1;
+var m = 1;
+var dt = 0.1;
+
+var F = [0,0,0];
+var v = [0,1,0];
+var B = [0,0,1];
+var r0 = [1,0,0];
+var A = [0,0,0];
+var r = [];
+
+var npts = 1000;
+
+var x=[];
+var y=[];
+var z=[];
+var t=[];
+
+var T = 2*Math.PI*Math.sqrt(r0[0]*r0[0]+r0[1]*r0[1]+r0[2]*r0[2])/Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);
+var omega = 2*Math.PI/T;
+
+for (var i=0;i<npts;i++) {
+	t[i] = i*dt;
+	x[i] = r[0];
+	y[i] = r[1];
+	z[i] = r[2];
+
+	r[0] = Math.sqrt(r0[0]*r0[0]+r0[1]*r0[1]+r0[2]*r0[2])*Math.cos(omega*t[i]);
+	r[1] = Math.sqrt(r0[0]*r0[0]+r0[1]*r0[1]+r0[2]*r0[2])*Math.sin(omega*t[i]);
+}
+
+var dadosxz = [{x: t, y: x, mode: "lines", name: "Posiçãox", line: {color:"red"}}];
+var dadosyz = [{x: t, y: y, mode: "lines", name: "Posiçãoy", line: {color:"red"}}];
+var dadosxy = [{x: x, y: y, mode: "lines", name: "Posiçãoxy", line: {color:"red"}}];
+
+var layout = {title: "Posições",showlegend:true};
+
+Plotly.newPlot("divGraf1",dadosxz,layout);
+Plotly.newPlot("divGraf2",dadosyz,layout);
+Plotly.newPlot("divGraf3",dadosxy,layout);
+
+</script>
+</html>

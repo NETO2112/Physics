@@ -1,0 +1,199 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <script src="http://canzian.fsc.ufsc.br/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX","output/HTML-CSS"],
+        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      });
+    </script>
+</head>
+
+<body>
+1
+$$
+\begin{eqnarray}
+B_x(x,y,z) & = &
+\frac{M_0}{c} \ln{ 
+\left(
+\frac {(y-a)+\sqrt{(x+l)^2+(y-a)^2+z^2}}
+      {(y+a)+\sqrt{(x+l)^2+(y+a)^2+z^2}}
+\times
+\frac {(y+a)+\sqrt{(x-l)^2+(y+a)^2+z^2}}
+      {(y-a)+\sqrt{(x-l)^2+(y-a)^2+z^2}}
+\right)} \\
+
+B_y(x,y,z) & = &
+\frac{M_0}{c} 
+\ln{ 
+	\left(
+		\frac
+			{(x-l)+\sqrt{(x-l)^2+(y+a)^2+z^2}}
+			{(x+l)+\sqrt{(x+l)^2+(y+a)^2+z^2}}
+		\times
+		\frac
+			{(x+l)+\sqrt{(x+l)^2+(y-a)^2+z^2}}
+			{(x-l)+\sqrt{(x-l)^2+(y-a)^2+z^2}}
+	\right)
+}\\
+
+B_z(x,y,z) & = &
+\frac{M_0}{c}
+\arctan{
+	\left(
+		\frac
+			{(x+l)(y+a)}
+			{z\sqrt{(x+l)^2+(y+a)^2+z^2}}
+	\right)} \\
+& - &
+\frac{M_0}{c}
+\arctan{
+	\left(
+		\frac
+			{(x-l)(y+a)}
+			{z\sqrt{(x-l)^2+(y+a)^2+z^2}}
+	\right)} \\
+& - &
+\frac{M_0}{c}
+\arctan{
+	\left(
+		\frac
+			{(x+l)(y-a)}
+			{z\sqrt{(x+l)^2+(y-a)^2+z^2}}
+	\right)} \\
+& + &
+\frac{M_0}{c}
+\arctan{
+	\left(
+		\frac
+			{(x-l)(y-a)}
+			{z\sqrt{(x-l)^2+(y-a)^2+z^2}}
+	\right)} \\
+\end{eqnarray}
+$$
+
+<script>
+
+/*
+var x;
+var y=0;
+var z=1;
+
+var M0=1;
+var c=1;
+var a=1;
+var l=1;
+
+var M0c=M0/c;
+var dx=4*l/20;
+
+//Bx
+
+
+for (x=-2*l;x<=2*l;x=x+dx) {
+	var n1x=((y-a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	var n2x=((y+a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d1x=((y+a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d2x=((y-a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+
+	var Bx=M0c*Math.log((n1x/d1x)*(n2x/d2x));
+	document.write(Bx+'<br>');
+	}
+
+//By
+
+for (x=-2*l;x<=2*l;x=x+dx) {
+	var n1y=((x-l)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var n2y=((x+l)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	var d1y=((x+l)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d2y=((x-l)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	
+	var By=M0c*Math.log((n1y/d1y)*(d1y/d2y));
+	document.write(By+'<br>');
+	}
+
+//Bz
+
+for (x=-2*l;x<=2*l;x=x+dx) {
+	var n1z=(x+l)*(y+a);
+	var n2z=(x-l)*(y+a);
+	var n3z=(x+l)*(y-a);
+	var n4z=(x-l)*(y-a);
+	var d1z=z*Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2));
+	var d2z=z*Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2));
+	var d3z=z*Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2));
+	var d4z=z*Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2));
+
+	var Bz=M0c*(Math.atan2(n1z,d1z)-Math.atan2(n2z,d2z)-Math.atan2(n3z,d3z)+Math.atan2(n4z,d4z));
+	document.write(Bz+'<br>');
+	}
+*/
+
+var M0=1;
+var c=1;
+var a=1;
+var l=1;
+var M0c=M0/c;
+
+function Bx(x,y,z) {
+	var n1x=((y-a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	var n2x=((y+a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d1x=((y+a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d2x=((y-a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+
+	var Bx=M0c*Math.log((n1x/d1x)*(n2x/d2x));
+	return Bx;
+}
+
+function By(x,y,z) {
+	var n1y=((x-l)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var n2y=((x+l)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	var d1y=((x+l)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+	var d2y=((x-l)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	
+	var By=M0c*Math.log((n1y/d1y)*(d1y/d2y));
+	return By;
+}
+
+function Bz(x,y,z) {
+	var n1z=(x+l)*(y+a);
+	var n2z=(x-l)*(y+a);
+	var n3z=(x+l)*(y-a);
+	var n4z=(x-l)*(y-a);
+	var d1z=z*Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2));
+	var d2z=z*Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2));
+	var d3z=z*Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2));
+	var d4z=z*Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2));
+
+	var Bz=M0c*(Math.atan2(n1z,d1z)-Math.atan2(n2z,d2z)-Math.atan2(n3z,d3z)+Math.atan2(n4z,d4z));
+	return Bz;
+}
+
+var x;
+var y=0;
+var z=1;
+var N=20;
+var dx=2*l/N;
+
+for (var i=0;i<=N;i++) {
+	x=-l+i*dx;
+	var B=Math.sqrt(Math.pow(Bx(x,y,z),2)+Math.pow(By(x,y,z),2)+Math.pow(Bz(x,y,z),2));
+	//document.write("Para x = " + x + " <br> B = " + B + " <br><br> ");
+	console.log(By(x,y,z));
+}
+
+//document.write("Bx: <br><br> ");
+/*
+for (var i=0;i<=N;i++) {
+	x=-l+i*dx;
+	document.write("Para x = " + x + " <br> Bx = " + Bx(x,y,z) + " <br><br> ");
+}
+*/
+//document.write(Bx(0,y,z));
+</script>
+</body>
+</html>

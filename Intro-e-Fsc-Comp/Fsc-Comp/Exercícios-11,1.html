@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <script
+    src="http://canzian.fsc.ufsc.br/Plotly/plotly-latest.min.js">
+  </script>
+</head>
+
+<body>
+
+<div id="divGraf1" style="width:500px;height:500px"></div>
+<div id="divGraf2" style="width:500px;height:500px"></div>
+<div id="divGraf3" style="width:500px;height:500px"></div>
+
+<script>
+
+function cBxp(x,y,z,a,l) {
+
+	var M0=1;
+	var c=1;
+	var fp=1.4;
+	var q=0.25*l;
+	var p=0.33*a;
+	var M0c = 0.03;
+	
+	function cBx(x,y,z,a,l) {
+		var n1x=((y-a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+		var n2x=((y+a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d1x=((y+a)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d2x=((y-a)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+	
+		var Bx=M0c*Math.log((n1x/d1x)*(n2x/d2x));
+		return Bx;
+	}
+
+	var N=20;
+	var dx=2*2*l/N;
+	
+	var lPart = [l-2*q,q,l-2*q,q,l-2*q];
+	var aPart = [a-2*p,a,p,a,p];
+	var dxPart = [0,l-q,0,-(l-q),0];
+	var dyPart = [0,0,(a-p),0,-(a-p)];
+	
+	var Bx=0;
+	
+	for (var j=0;j<lPart.length;j++) {
+		var nx = x-dxPart[j];
+		var ny = y-dyPart[j];
+		Bx = Bx + cBx(nx,ny,z,aPart[j],lPart[j]);
+	}
+	return Bx;
+}
+
+function cByp(x,y,z,a,l) {
+
+	var M0=1;
+	var c=1;
+	var fp=1.4;
+	var q=0.25*l;
+	var p=0.33*a;
+	var M0c = 0.03;
+	
+	function cBy(x,y,z,a,l) {
+		var n1y=((x-l)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var n2y=((x+l)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+		var d1y=((x+l)+Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2)));
+		var d2y=((x-l)+Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2)));
+		
+		var By=M0c*Math.log((n1y/d1y)*(d1y/d2y));
+		return By;
+	}
+
+	var N=20;
+	var dx=2*2*l/N;
+	
+	var lPart = [l-2*q,q,l-2*q,q,l-2*q];
+	var aPart = [a-2*p,a,p,a,p];
+	var dxPart = [0,l-q,0,-(l-q),0];
+	var dyPart = [0,0,(a-p),0,-(a-p)];
+	
+	var By=0;
+	
+	for (var j=0;j<lPart.length;j++) {
+		var nx = x-dxPart[j];
+		var ny = y-dyPart[j];
+		By = By + cBy(nx,ny,z,aPart[j],lPart[j]);
+	}
+	return By;
+}
+
+function cBzp(x,y,z,a,l) {
+
+	var M0=1;
+	var c=1;
+	var fp=1.4;
+	var q=0.25*l;
+	var p=0.33*a;
+	var M0c = 0.03;
+	
+	function cBz(x,y,z,a,l) {
+		var n1z=(x+l)*(y+a);
+		var n2z=(x-l)*(y+a);
+		var n3z=(x+l)*(y-a);
+		var n4z=(x-l)*(y-a);
+		var d1z=z*Math.sqrt(Math.pow(x+l,2)+Math.pow(y+a,2)+Math.pow(z,2));
+		var d2z=z*Math.sqrt(Math.pow(x-l,2)+Math.pow(y+a,2)+Math.pow(z,2));
+		var d3z=z*Math.sqrt(Math.pow(x+l,2)+Math.pow(y-a,2)+Math.pow(z,2));
+		var d4z=z*Math.sqrt(Math.pow(x-l,2)+Math.pow(y-a,2)+Math.pow(z,2));
+	
+		var Bz=M0c*(Math.atan2(n1z,d1z)-Math.atan2(n2z,d2z)-Math.atan2(n3z,d3z)+Math.atan2(n4z,d4z));
+		return Bz;
+	}
+
+	var N=20;
+	var dx=2*2*l/N;
+	
+	var lPart = [l-2*q,q,l-2*q,q,l-2*q];
+	var aPart = [a-2*p,a,p,a,p];
+	var dxPart = [0,l-q,0,-(l-q),0];
+	var dyPart = [0,0,(a-p),0,-(a-p)];
+	
+	var Bz=0;
+	
+	for (var j=0;j<lPart.length;j++) {
+		var nx = x-dxPart[j];
+		var ny = y-dyPart[j];
+		Bz = Bz + cBz(nx,ny,z,aPart[j],lPart[j]);
+	}
+	return Bz;
+}
+
+var l=0.01905;
+var a=0.0127;
+
+/////////////////////////////////////////////////////////////////////
+
+var m = 9.11*Math.pow(10,-31);
+var q = -1.6*Math.pow(10,-19);
+var dt =0.001*Math.pow(10,-9);
+
+var E0 = 500*1000*1.6e-19; //J
+
+var F = [0,0,0];
+var v = [0,Math.sqrt(2*E0/m),0];
+var B = [0,0,0];
+var r = [0,-2*a,a/2];
+var A = [0,0,0];
+
+var npts = 100;
+
+var x=[];
+var y=[];
+var z=[];
+var t=[];
+
+for (var i=0;i<npts;i++) {
+
+	//document.write("<br>x="+r[0]+"<br>y="+r[1]+"<br>z="+r[2]+"<br>vx="+v[0]+"<br>vy="+v[1]+"<br>vz"+v[2]+"<br>");
+
+	B[0] = cBxp(r[0],r[1],r[2],a,l), B[1] = cByp(r[0],r[1],r[2],a,l), B[2] = cBzp(r[0],r[1],r[2],a,l);
+
+	t[i]=i*dt;
+	x[i] = r[0];
+	y[i] = r[1];
+	z[i] = r[2];
+
+	F[0] = q*(v[1]*B[2]-v[2]*B[1]);
+	F[1] = q*(v[2]*B[0]-v[0]*B[2]);
+	F[2] = q*(v[0]*B[1]-v[1]*B[0]);
+
+	A[0] = F[0]/m, A[1] = F[1]/m, A[2] = F[2]/m;
+
+	v[0]= v[0]+A[0]*dt, v[1]= v[1]+A[1]*dt, v[2]= v[2]+A[2]*dt;
+
+	r[0] =r[0] + v[0]*dt, r[1] = r[1] + v[1]*dt, r[2] = r[2] + v[2]*dt;
+
+}
+
+var dadosxz = [{x: x, y: z, mode: "lines", name: "Posiçãoxz", line: {color:"red"}}];
+var dadosyz = [{x: y, y: z, mode: "lines", name: "Posiçãoyz", line: {color:"red"}}];
+var dadosxy = [{x: x, y: y, mode: "lines", name: "Posiçãoxy", line: {color:"red"}}];
+
+var layout = {title: "Posições",showlegend:true};
+
+Plotly.newPlot("divGraf1",dadosxz,layout);
+Plotly.newPlot("divGraf2",dadosyz,layout);
+Plotly.newPlot("divGraf3",dadosxy,layout);
+
+</script>
+</html>
